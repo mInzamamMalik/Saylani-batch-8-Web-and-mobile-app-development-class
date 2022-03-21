@@ -1,0 +1,29 @@
+body {
+    margin: 0px;
+}
+
+.nav-container {
+    height: 60px;
+    background-color: #CAF5B5;
+    border: 1px solid black;
+}
+
+.nav-container>a {
+    display: inline-block;
+    height: 20px;
+    width: 60px;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 3px;
+    background-color: #316DC3;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 20% 20% 20% 20%;
+}
+
+.nav-container>a:hover {
+    background-color: red;
+    border-radius: 0%;
+
+}
