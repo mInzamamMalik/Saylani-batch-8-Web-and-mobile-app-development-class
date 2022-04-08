@@ -1,0 +1,10 @@
+p{
+    background-color: darkkhaki;
+    min-height: 92px;
+    max-height: 140px;
+
+    overflow: hidden;
+
+    padding: 30px;
+    margin: 32px;
+}
