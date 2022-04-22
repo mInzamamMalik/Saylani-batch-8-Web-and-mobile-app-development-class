@@ -1,0 +1,6 @@
+
+
+.btn-group-custom > .btn:first-child + .btn {
+
+    width: 200px;
+}
