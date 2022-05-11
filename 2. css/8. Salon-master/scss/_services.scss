@@ -1,0 +1,41 @@
+// Styling for the services section
+
+.services {
+	padding:100px 0;
+	background: $gray-200;
+
+	.service-cont {
+		img {
+			border: 1px solid $gray-300;
+			height: 250px;
+			width: 250px; 
+			border-radius: 5% 5% 0 0;
+
+			@media (min-width:768px) and (max-width:991px) {
+				height: 100%;
+				width: 100%;	
+			}
+		}
+
+		.service-desc {
+			background:$primary-col;
+			color: $gray-700;
+			font-weight: 700;
+			padding: 10px 0;
+			font-size: 18px;
+			border-radius: 0 0 10% 10%;
+			width:98%;
+			margin-top: -0px;
+			margin-left: 2px;
+
+			@media (max-width: 575px) {
+				width: 250px;
+				margin: 0 auto; 
+			}
+		}
+
+		@media (max-width:767px) {
+			margin-top: 50px;
+		}
+	}
+}

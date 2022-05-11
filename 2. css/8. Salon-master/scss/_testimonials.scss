@@ -1,0 +1,88 @@
+
+.testimonials { 
+
+	background: $gray-200; 
+
+    .testimonial {
+        border-left: 4px solid $primary-col;
+        box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.06);
+        background: #fff;
+        padding: 30px 30px 30px 130px;
+        margin: 0 15px 30px 15px;
+        overflow: hidden;
+        position: relative;
+
+        &:before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border-top: 25px solid $primary-col;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            transform: rotate(-45deg);
+            transform-origin: 80% -30% 0;
+        }
+
+        .pic {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: absolute;
+            top: 60px;
+            left: 20px;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .description {
+            font-size: 15px;
+            font-style: italic;
+            color: #918686;
+            line-height: 25px;
+            margin-bottom: 15px;
+        }
+
+        .title {
+            display: inline-block;
+            font-size: 20px;
+            font-weight: 700;
+            color: $primary-col;
+            @include lobster-font;
+            margin: 0;
+        }
+
+        .post {
+            display: inline-block;
+            font-size: 17px;
+            color: $primary-col;
+        }
+
+        @media only screen and (max-width: 767px) {
+            padding: 20px;
+            text-align: center;
+            .pic {
+                display: block;
+                position: static;
+                margin: 0 auto 15px;
+            }
+        }
+    } 
+
+    .owl-theme .owl-controls .owl-page span {
+        border: 2px solid $primary-col;
+        background: #fff;
+        opacity: 1;
+    }
+
+    .owl-theme .owl-controls .owl-page.active span,
+    .owl-theme .owl-controls .owl-page:hover span {
+        background: $primary-col;
+    }
+ 
+}

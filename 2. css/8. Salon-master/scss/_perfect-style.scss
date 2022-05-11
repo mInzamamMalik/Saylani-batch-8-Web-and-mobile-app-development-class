@@ -1,0 +1,20 @@
+.perfect-style {
+	background-image: url('../img/perfect-style.jpg');
+	@include background-cover;
+	height:100vh;
+	border-top: 5px solid $gray-300;
+	border-bottom: 5px solid $gray-300;
+
+	.perfect-style-desc {
+		margin-top: 100px;
+		padding: 20px;
+		color: $white;
+		border-radius: 5px;
+		background:$primary-col;
+		border:5px solid $gray-500;
+		h3 {
+			@include lobster-font;
+			letter-spacing:2px;
+		}
+	}
+}

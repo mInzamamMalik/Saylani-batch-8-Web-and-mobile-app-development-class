@@ -1,0 +1,24 @@
+// Bootstrap Sass Imports 
+@import "node_modules/bootstrap/scss/bootstrap";
+
+// Core variables and mixins
+@import "variables.scss";
+@import "mixins.scss";
+
+// Global CSS
+@import "global.scss";
+
+// Components
+@import "navbar.scss";
+@import "heading.scss";
+@import "masthead.scss";
+@import "button.scss";
+@import "services.scss";
+@import "about.scss";
+@import "perfect-style.scss";
+@import "team.scss";
+@import "portfolio.scss";
+@import "testimonials.scss";
+@import "contact.scss";
+@import "footer.scss";
+ 

@@ -1,0 +1,44 @@
+/*====================================================
+                        HOME
+======================================================*/
+
+    header {
+        height: 100%;
+
+        .carousel-item {
+            height: 100vh;
+            min-height: 300px;
+            background: no-repeat center center scroll; 
+            @include background-cover;
+
+            &:nth-child(1) {
+                background-image: url("../img/header-background-2.jpg");  
+            }
+
+            &:nth-child(2) {
+                background-image: url("../img/header-background-1.jpg");  
+            } 
+
+            .home-content-box {
+                width: 100%;
+                height: 100%;
+                display: table;
+                background: rgba(8, 8, 8, 0.5);
+
+                .home-content-box-inner {
+                    display: table-cell;
+                    vertical-align: middle;
+     
+                    .home-heading h3 {
+                        color: #fff;
+                        @include lobster-font;
+                        letter-spacing: 2px;
+                        font-size: 55px;
+                        // font-weight: 700;
+                        margin: 20px 0 20px 0;
+                    }
+                }        
+            }
+        }
+    }
+    

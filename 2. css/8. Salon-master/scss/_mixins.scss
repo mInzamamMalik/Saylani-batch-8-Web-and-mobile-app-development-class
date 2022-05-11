@@ -1,0 +1,27 @@
+// Mixins
+
+// Background Cover Mixin
+@mixin background-cover {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+// border radius with variables
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+// Font Mixins  
+
+@mixin robot-font {
+  font-family: 'Roboto', sans-serif;
+}
+
+@mixin lobster-font {
+  font-family: 'Lobster', cursive;
+} 

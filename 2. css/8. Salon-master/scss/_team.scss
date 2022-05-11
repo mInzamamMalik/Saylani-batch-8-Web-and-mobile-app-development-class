@@ -1,0 +1,191 @@
+// Styling for the team section
+
+    .team {
+        .our-team {
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease-in-out 0s;
+
+            .pic {
+                &:before {
+                    content: "";
+                    background: $primary-col;
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    bottom: 10px;
+                    right: 10px;
+                    opacity: 0.78;
+                    transform: scale(0);
+                    transition: all 0.3s ease-in-out 0s;
+                }    
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+
+                .social {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    width: 100%;
+                    position: absolute;
+                    top: 40%;
+                    opacity: 0;
+                    transition: all 0.3s ease-in-out 0s;
+
+                    li {
+                        display: inline-block;
+                        position: relative;
+                        transition: all 0.3s ease-in-out 0s;
+
+                        a {
+                            display: block;
+                            width: 35px;
+                            height: 35px;
+                            line-height: 35px;
+                            background: $gray-600;
+                            font-size: 16px;
+                            color: $white;
+                            margin: 0 15px 0 0;
+                            transform: rotate(45deg);
+                            transition: all 0.3s ease-in-out 0s;
+
+                            i {
+                                transform: rotate(-45deg);
+                                transition: all 0.3s ease-in-out 0s;
+                            }
+
+                            &:hover {
+                                line-height: 35px;
+                                background: $white;
+                                color: $gray-600;
+                                transform: rotate(-45deg);
+
+                                i {
+                                    transform: rotate(45deg);
+                                }
+                            } 
+                        }
+                    }
+
+                    li {
+                        &:nth-child(1) {
+                            transform: translate3d(22px, -19px, 0px);
+                        }
+
+                        &:nth-child(2) {
+                            transform: translate3d(36px, 38px, 0px);
+                        }
+
+                        &:nth-child(3) {
+                            transform: translate3d(-18px, -75px, 0px);
+                        }
+
+                        &:nth-child(4) {
+                            transform: translate3d(-5px, -19px, 0px);
+                        }
+                    }
+                }
+            }
+
+            .team-content {
+                padding: 15px 10px;
+                background: $gray-100;
+                position: relative;
+                transition: all 0.3s ease-in-out 0s;
+
+                .title {
+                    font-size: 18px;
+                    font-weight: 700;
+                    color: $gray-600;
+                    @include robot-font;
+                    text-transform: uppercase;
+                    margin: 0 0 12px 0;
+                }
+
+                small {
+                    display: block;
+                    font-size: 14px;
+                    color: #999;
+                    margin-bottom: 8px;
+                }
+            }
+
+            .team-layer {
+                width: 100%;
+                padding: 34px 10px;
+                background: $gray-100;
+                border-bottom: 2px solid $primary-col;
+                position: absolute;
+                bottom: -50px;
+                left: 0;
+                opacity: 0;
+                transition: all 0.3s ease-in-out 0s;
+
+                a {
+                    display: inline-block;
+                    font-size: 18px;
+                    font-weight: 700;
+                    color: $gray-600;
+                    @include robot-font;
+                    text-transform: uppercase;
+                    margin: 0 0 12px 0;
+                    transition: all 0.3s ease-in-out 0s;
+
+                    &:hover {
+                        color: $primary-col;
+                    }
+                }
+            }
+            
+            .post {
+                display: block;
+                font-size: 14px;
+                color: #999;
+                text-transform: capitalize;
+            }
+            
+            &:hover {
+                .pic {
+                    &:before {
+                        transform: scale(1);
+                    }
+
+                    .social {
+                        opacity: 1;
+
+                        li {
+                            &:nth-child(1) {
+                                transform: translate3d(62px, -19px, 0px);
+                            }
+
+                            &:nth-child(2) {
+                                transform: translate3d(36px, 8px, 0px);
+                            }
+
+                            &:nth-child(3) {
+                                transform: translate3d(-18px, -46px, 0px);
+                            }
+
+                            &:nth-child(4) {
+                                transform: translate3d(-43px, -19px, 0px);
+                            }
+                        }
+                    }
+                }
+
+                .team-layer {
+                    bottom: 0;
+                    opacity: 1;
+                }
+            }
+
+            @media (max-width: 990px) {
+                margin-bottom: 35px;
+            }
+        }
+    }    
+ 
