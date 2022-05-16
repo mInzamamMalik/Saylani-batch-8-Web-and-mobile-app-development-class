@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <input type="number" id="inputNum1">
+    <input type="number" id="inputNum2">
+
+    <button onclick="submit()">Submit</button>
+
+    <h1 id="sumResult"></h1>
+
+    <script>
+
+        function submit() {
+            let inputNum1 = document.querySelector('#inputNum1').value;
+            let inputNum2 = document.querySelector('#inputNum2').value;
+            
+            console.log("inputNum1", inputNum1);
+            console.log("inputNum2", inputNum2);
+
+            let result = Number(inputNum1) + Number(inputNum2);
+
+            console.log("result", result);
+
+            let sumResultElement = document.querySelector('#sumResult');
+            sumResultElement.innerText = result;
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
