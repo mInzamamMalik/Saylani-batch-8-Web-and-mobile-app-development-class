@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <input type="number" id="inputNum1">
+
+    <button onclick="submit()">Check</button>
+
+    <h1 id="sumResult"> </h1>
+
+    <script>
+
+        function submit() {
+
+            let inputNum1 = document.querySelector('#inputNum1').value;
+            console.log("inputNum1", inputNum1);
+
+            let result = 0;
+
+            if (inputNum1 < 50000) {
+                result = "the amount is within the limit";
+            } else {
+                result = "You are over the limit, 50 thousand is the limit"
+            }
+
+            console.log("result", result);
+
+            let sumResultElement = document.querySelector('#sumResult');
+
+            sumResultElement.innerText = result;
+
+        }
+
+        let variable1 = "malik";
+
+        if (variable1) {
+            console.log("condition is true");
+        }
+        // list of falsy values:
+        // =====================
+        //      false	The keyword false.
+        //      0	The Number zero (so, also 0.0, etc., and 0x0).
+        //      -0	The Number negative zero (so, also -0.0, etc., and -0x0).
+        //      0n	The BigInt zero (so, also 0x0n). Note that there is no BigInt negative zero — the negation of 0n is 0n.
+        //      "", '', ``	Empty string value.
+        //      null	
+        //      undefined	
+        //      NaN	 
+
+
+
+    </script>
+
+
+</body>
+
+</html>
