@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>Hello For Loop</h1>
+
+    <form onsubmit="printTable(); return false">
+        <label for="numInput"> Enter a Number to print table </label>
+        <input required min="2" type="number" id="numInput">
+
+        <button type="submit">Print</button>
+    </form>
+    <script>
+        function printTable() {
+
+            let numInput = document.querySelector("#numInput").value
+
+            for (let i = 0; i < 10; i++) {
+
+                console.log(`${numInput} x ${i + 1} = ${numInput * (i + 1)}`);
+            }
+        }
+
+
+
+
+        let i = 0;
+
+        for ( console.log("init") ; ;) {
+
+            console.log("some text: ", i);
+            i++
+
+            if (i > 4) {
+                break;
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
