@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .mInput {
+
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 5px;
+            display: inline-block
+        }
+
+        #message {
+            color: red;
+        }
+
+        .hidden {
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        Matrix Multiply App
+    </h1>
+
+    <form onsubmit="start(); return false">
+
+        <input type="number" required min="2" id="rowInput">
+        X
+        <input type="number" required min="2" id="colInput">
+        <button type="submit">Start</button>
+        <div id="message"></div>
+    </form>
+
+    <br>
+    <br>
+
+    <!-- Matrix input form -->
+    <form onsubmit="multiply(); return false" class="hidden" id="metrixInputForm">
+
+        <div id="mInput1" class="mInput"></div>
+        X
+        <div id="mInput2" class="mInput"></div>
+
+        <button>Multiply</button>
+
+        <div id="intermediate" class="mInput"></div>
+
+        <div id="mResult" class="mInput"></div>
+
+    </form>
+
+
+    <script>
+
+        let rowInput = "";
+        let colInput = "";
+
+        function start() {
+
+            let message = document.querySelector("#message")
+            let mInput1 = document.querySelector("#mInput1")
+            let mInput2 = document.querySelector("#mInput2")
+            let mResult = document.querySelector("#mResult")
+
+            mInput1.innerHTML = "";
+            mInput2.innerHTML = "";
+            mResult.innerHTML = "";
+            message.innerHTML = "";
+
+
+            rowInput = +document.querySelector("#rowInput").value;
+            colInput = +document.querySelector("#colInput").value;
+
+            if (rowInput !== colInput) {
+                message.innerText = "Please enter the same number for both inputs";
+                return;
+            }
+            if (isNaN(rowInput) || isNaN(colInput)) {
+                message.innerText = "Please enter a number";
+                return;
+            }
+            if (rowInput < 2 || colInput < 2) {
+                message.innerText = "Please enter a number greater than 1";
+                return;
+            }
+
+
+            for (let i = 0; i < rowInput; i++) {
+                for (let j = 0; j < colInput; j++) {
+                    console.log("running");
+                    mInput1.innerHTML +=
+                        `<input type="number" required min="0" max="100" id="m1-${i}-${j}" value="0">`;
+                    mInput2.innerHTML +=
+                        `<input type="number" required min="0" max="100" id="m2-${i}-${j}" value="0">`;
+                    mResult.innerHTML +=
+                        `<input type="number" disabled required min="0" max="100" id="mResult-${i}-${j}" value="0">`;
+                }
+                mInput1.innerHTML += `<br>`;
+                mInput2.innerHTML += `<br>`;
+                mResult.innerHTML += `<br>`;
+            }
+            document.querySelector("#metrixInputForm").classList.remove("hidden");
+
+        }
+
+
+        function multiply() {
+
+            let matrixa = [];
+            let matrixb = [];
+            let intermediate = document.querySelector("#intermediate");
+            intermediate.innerHTML = "";
+
+            for (let i = 0; i < rowInput; i++) {
+                for (let j = 0; j < colInput; j++) {
+                    if (!matrixa[i]) matrixa[i] = [];
+                    if (!matrixb[i]) matrixb[i] = [];
+
+                    matrixa[i][j] = +document.querySelector(`#m1-${i}-${j}`).value;
+                    matrixb[i][j] = +document.querySelector(`#m2-${i}-${j}`).value;
+
+                    // document.querySelector(`#mResult-${i}-${j}`).value =
+                    //     +document.querySelector(`#m1-${i}-${j}`).value
+                    //     *
+                    //     +document.querySelector(`#m2-${i}-${j}`).value;
+
+                }
+            }
+
+            let returnValue = matrixMultiply(matrixa, matrixb);
+            let result = returnValue[0]
+            let intermediateHtml = returnValue[1]
+
+
+            console.log("intermediateHtml: ", intermediateHtml);
+            intermediate.innerHTML = intermediateHtml
+
+            for (let i = 0; i < result.length; i++) {
+                for (let j = 0; j < result[i].length; j++) {
+                    console.log(i, j);
+
+                    document.querySelector(`#mResult-${i}-${j}`).value = result[i][j]
+
+                }
+            }
+
+        }
+
+        // https://stackoverflow.com/a/62605311/4378475
+        function matrixMultiply(a, b) {
+
+            let intermediateHtml = "";
+            let aRows = a.length;
+            let aCols = a[0].length;
+            let bCols = b[0].length;
+            let result = new Array(aRows);
+            for (let r = 0; r < aRows; ++r) {
+                const row = new Array(bCols);
+                result[r] = row;
+                const ar = a[r];
+                for (let c = 0; c < bCols; ++c) {
+                    let sum = 0.;
+                    for (let i = 0; i < aCols; ++i) {
+                        sum += ar[i] * b[i][c];
+                        intermediateHtml += `${ar[i]} * ${b[i][c]} + `;
+                    }
+                    intermediateHtml = intermediateHtml.slice(0, -2);
+                    intermediateHtml += `&nbsp;&nbsp;&nbsp;&nbsp;`;
+                    row[c] = sum;
+                }
+                intermediateHtml += `<br>`
+            }
+            return [result, intermediateHtml];
+        }
+    </script>
+
+
+</body>
+
+</html>
