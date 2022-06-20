@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>ES6 functions</h1>
+
+    <script>
+        // function add(a, b) {
+        //     return a + b;
+        // }
+
+        // let result = add(3, 6);
+        // let result2 = add(23, 2);
+
+        // console.log(result);
+        // console.log(result2);
+
+        function average(arr) {
+            if (!arr.length || typeof arr === "string") {
+                return 0;
+            }
+            let sum = 0;
+            for (let i = 0; i < arr.length; i++) {
+                sum += arr[i];
+            }
+            return sum / arr.length;
+        }
+
+        let result = average([1, 2, 3, 4, 5]);
+        let result2 = average([123, 12, 2213, 34, 215]);
+
+        console.log("result: ", result);
+        console.log("result2: ", result2);
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
