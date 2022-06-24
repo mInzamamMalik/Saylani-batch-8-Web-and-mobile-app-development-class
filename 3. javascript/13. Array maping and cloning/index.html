@@ -10,36 +10,38 @@
 
 <body>
 
-    <h1>ES6 functions</h1>
+
+
+    <h1>Array Map</h1>
 
     <script>
-        // function add(a, b) {
-        //     return a + b;
-        // }
+        // let arr = [1, 2, 3, 4, 5];
 
-        // let result = add(3, 6);
-        // let result2 = add(23, 2);
+        // let copy = arr.map((eachItem, i) => {
+        //     console.log(eachItem, i);
 
-        // console.log(result);
-        // console.log(result2);
+        //     return eachItem * eachItem * eachItem;
+        // });
 
-        function average(arr) {
-            if (!arr.length || typeof arr === "string") {
-                return 0;
-            }
-            let sum = 0;
-            for (let i = 0; i < arr.length; i++) {
-                sum += arr[i];
-            }
-            return sum / arr.length;
-        }
+        // console.log(copy);
 
-        let result = average([1, 2, 3, 4, 5]);
-        let result2 = average([123, 12, 2213, 34, 215]);
 
-        console.log("result: ", result);
-        console.log("result2: ", result2);
+        // let arr = [1, 2, 3, 4, 5];
+        // // let copy = arr.map(eachItem => {
+        // //     return eachItem;
+        // // });
+        // let copy = [...arr]
 
+        // console.log("arr: ", ...arr);
+        // console.log("copy: ", copy);
+
+        // copy.push("some item");
+        // arr.push("new item");
+
+        // console.log("arr: ", arr);
+        // console.log("copy: ", copy);
+
+        
 
 
 
@@ -49,6 +51,8 @@
 
 
     </script>
+
+
 </body>
 
 </html>
