@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>Es6 functions</h1>
+
+
+    <form onsubmit="myFunction(event); return false">
+
+        <label for="num">isEven:</label>
+        <input id="num" type="text">
+
+        <button type="submit">Check</button>
+    </form>
+
+    <div id="result"></div>
+
+
+
+    <script>
+
+        let myFunction = (e) => {
+
+            console.log("e: ", e);
+
+            let num = +document.getElementById("num").value;
+            let result = isEven(num);
+            document.getElementById("result").innerText = result;
+        }
+
+
+
+
+        // // hoisting
+        // function add(a, b) {
+        //     return a + b;
+        // }
+
+        // let add1 = function (a, b) {
+        //     return a + b;
+        // }
+
+        // // es6 arrow functions
+        // let add2 = (a, b) => {
+        //     return a + b;
+        // }
+
+        // // no need of parantheses if there is only one argument
+        // let findCube =  num => {
+        //     return num * num * num;
+        // };
+
+        // // no need of return keyword if there is only one line of code
+        // let findCube1 =  num => num * num * num;
+
+        
+        let isEven = (num) => {
+            if (isNaN(num)) {
+                return "Not a number";
+            }
+            if (num % 2 == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        // let result = isEven("abc");
+        // console.log("Result: " + result);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+</body>
+
+</html>
