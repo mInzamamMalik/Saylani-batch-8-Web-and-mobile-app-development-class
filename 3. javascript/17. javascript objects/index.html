@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>Objects</h1>
+
+
+    <script>
+
+        const persons = ["ali", 30, false,
+            function name(a, b) {
+                return a + b
+            },
+            {
+                name: "ali",
+                age: 30,
+                isMarried: false
+            },
+            [1, 2, 3, 4, 5]
+        ];
+
+        console.log(persons[0]);
+        persons[0] = "ahmed";
+        persons.push("abc");
+        console.log(persons);
+
+        const person = {
+            isMarried: false,
+            age: 30,
+            name: "John",
+            family: ["ali", "ahmed", "mohamed"],
+            subjects: {
+                math: 80,
+                english: 90,
+                arabic: 70
+            },
+        }
+
+        person.subjects = "some subject";
+        console.log("person: ", person);
+
+
+        // console.log(person.name);
+        // console.log(person.age);
+        // console.log(person.isMarried);
+
+        // person.name = "Ahmed";
+        // person.age = 65;
+        // person.isMarried = true;
+        // person.fullName = "Muhammad Ahmed"
+
+        console.log(person.family);
+        console.log(person.family[1]);
+
+
+
+
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>
