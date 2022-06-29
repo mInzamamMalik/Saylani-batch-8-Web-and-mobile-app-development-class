@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        function getWeatherData() {
+            // get city name
+            // const city = document.getElementById("city").value;
+
+            axios.get('http://api.weatherapi.com/v1/current.json?key=7bf713a100cb434db71182043222906&q=karachi')
+                .then(function (response) {
+                    // handle success
+                    const data = response.data;
+                    console.log(data);
+                })
+        }
+        getWeatherData();
+
+
+    </script>
+
+</head>
+
+<body>
+
+
+
+</body>
+
+</html>
