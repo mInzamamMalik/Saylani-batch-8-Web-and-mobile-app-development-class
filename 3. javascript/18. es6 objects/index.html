@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <h1>Object cloning</h1>
+
+    <script>
+
+
+        // let a = { name: "Ali" }
+        // let b = a;
+
+        // console.log(a.name);
+        // console.log(b.name);
+
+        // a.name = "Arsalan";
+
+        // console.log(a.name);
+        // console.log(b.name);
+
+        // b.name = "Rehan";
+
+        // console.log(a.name);
+        // console.log(b.name);
+
+
+        // let num1 = 5;
+        // let num2 = num1;
+
+        // num1 = 23;
+
+        // console.log(num1);
+        // console.log(num2);
+
+
+
+        let a = { name: "Ali" }
+
+        let b = { ...a }
+
+        console.log(a.name);
+        console.log(b.name);
+
+        a.name = "Arsalan";
+
+        console.log(a.name);
+        console.log(b.name);
+
+        b.name = "Rehan";
+
+        console.log(a.name);
+        console.log(b.name);
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>

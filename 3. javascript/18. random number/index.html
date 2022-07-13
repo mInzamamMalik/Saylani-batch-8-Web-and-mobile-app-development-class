@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Random Number</h1>
+    <script>
+
+        // let randomNumber = Math.random() * 100;
+
+        // randomNumber = Math.floor(randomNumber)
+
+        // console.log("Random number: ", randomNumber);
+
+
+        function getRandomArbitrary(min, max) {
+            max++;
+            return Math.floor(Math.random() * (max - min) + min)
+        }
+
+        let randomNumber = getRandomArbitrary(0, 100);
+        console.log("Random number: ", randomNumber);
+
+
+    </script>
+</body>
+
+</html>
