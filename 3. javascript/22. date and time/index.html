@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+</head>
+
+<body>
+
+    <h1>ES6 Date and time</h1>
+
+    <button onclick="datePlus()">Date plus</button>
+    <button onclick="minutePlus()">Minute plus</button>
+
+    <h1 id="time"></h1>
+    <h1 id="stopwatch"></h1>
+    <button onclick="pause()">Start/Pause</button>
+    <button onclick="reset()">Reset</button>
+    <br>
+    <br>
+    <br>
+    <button onclick="stopInterval()">stopInterval</button>
+    
+    
+    <script>
+        // let today = new Date();
+        // console.log("today: ", today);
+
+        // let mili = today.getTime(); // getting mili seconds
+        // console.log("mili: ", mili);
+
+        // let myTime = new Date(mili); // converting mili seconds to date object
+        // console.log("myTime: ", myTime);
+
+
+        // let hour = today.getHours();
+        // let minute = today.getMinutes();
+        // let second = today.getSeconds();
+        // let ampm = "AM";
+
+        // if(hour > 11){
+        //     ampm = "PM";
+        // }
+        // if (hour > 12) {
+        //     hour = hour - 12;
+        // }
+        // if(hour === 0){
+        //     hour = 12;
+        // }
+        // console.log(`time: ${hour}:${minute}:${second}`);
+
+        // let time = moment().format('a  h:mm:ss'); // https://momentjscom.readthedocs.io/en/latest/moment/04-displaying/01-format/
+        // console.log("time: ", time);
+
+
+        ///////////////////////////////////
+
+        // let today = new Date();
+        // console.log("today: ", today);
+
+        // function datePlus() {
+        //     today.setDate(today.getDate() + 1);
+        //     console.log("today: ", today);
+        // }
+        // function minutePlus() {
+        //     today.setMinutes(today.getMinutes() + 20);
+        //     console.log("today: ", today);
+        // }
+
+        // today.setFullYear(2001); // setting year
+        // console.log("today: ", today);
+
+        // today.setDate(32); // setting date
+        // console.log("today: ", today);
+
+        ////////////////////////
+
+        // let today = new Date();
+        // console.log("today: ", today);
+
+        // setInterval(() => {
+        //     document.querySelector("#time").innerText = moment().format('h:mm:ss a');
+        // }, 1000);
+
+        // setTimeout(() => {
+        //     console.log("some text");
+        // }, 3000);
+
+        ////////////////////////
+
+
+        let today = new Date("2020-01-01 00:00:00");
+        let isPause = true;
+
+        console.log("today: ", today);
+        let setIntervalId =
+            setInterval(() => {
+
+                if (!isPause) {
+                    today.setMilliseconds(today.getMilliseconds() + 123)
+                }
+
+                // document.querySelector("#stopwatch").innerText
+                //     = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}:${today.getMilliseconds()}`;
+                document.querySelector("#stopwatch").innerText
+                    = moment(today).format('HH:mm:ss:SSS');
+
+            }, 123);
+
+        function pause() {
+            isPause = !isPause;
+        }
+        function reset() {
+            today = new Date("2020-01-01 00:00:00");
+            isPause = true;
+        }
+
+        function stopInterval() {
+            clearInterval(setIntervalId)
+        }
+
+
+    </script>
+
+
+
+</body>
+
+</html>
