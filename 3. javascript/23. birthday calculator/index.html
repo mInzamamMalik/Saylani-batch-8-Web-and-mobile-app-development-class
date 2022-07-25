@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Teller</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+</head>
+
+<body>
+
+    <div class="glass">
+
+
+        <small id="yearOld"></small>
+
+
+        <form onsubmit="tellAge(); return false">
+
+            <h1 class="heading">Birth-Watch</h1>
+
+            <input type="date" id="age">
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+
+
+        <p class="yourAge"></p>
+
+        <div class="birthday">
+            <p id="demo"></p>
+        </div>
+
+        <div class="hidden" id="visible">
+            <div class="countdown">
+                <div class="box">
+                    <h2 class="day" id="day">00</h2>
+                </div>
+                <small>Day</small>
+
+                <div class="box">
+                    <h2 class="hours" id="hour">00</h2>
+                </div>
+                <small>Hours</small>
+
+                <div class="box">
+                    <h2 class="minute" id="minute">00</h2>
+                </div>
+                <small>minute</small>
+
+                <div class="box">
+                    <h2 class="second" id="second">00</h2>
+                </div>
+                <small>second</small>
+            </div>
+            <small>Left in your birthday</small>
+        </div>
+
+
+    </div>
+
+
+    <script src="app.js"></script>
+</body>
+
+</html>
