@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Ternary Operator</h1>
+
+    <script>
+
+        // let age = +prompt("Enter your age"); // 30
+
+        // // if (age < 18) {
+        // //     alert("you are now a grown man");
+        // // } else {
+        // //     alert("you are young");
+        // // }
+
+        // let result =
+        //     (age < 17) ?
+        //         "you are now a grown man"
+        //         :
+        //         "you are young"
+
+
+        //////////////////////
+
+
+        // let isGateOpen = false;
+
+        // let resultOnScreen = (isGateOpen) ? "Gate is open" : "Gate is closed"
+
+        // console.log(resultOnScreen);
+
+        /////////////////
+
+        // // inline usage
+        // let isGateOpen = false;
+
+        // console.log(
+        //     `Gate is ${(isGateOpen) ? "open" : "closed"}`
+        // );
+
+        // ternary operator can not have more than one statement => must use if else
+        // ternary operator evealuates to single value
+        // ternary operator can be used inline => must use ternary
+
+
+        //////////////
+
+        // chain statement
+
+        let percentage = 70;
+
+        let result =
+            (percentage > 80) ?
+                "A1"
+                :
+                (percentage < 80 && percentage > 69) ? "A"
+                    :
+                    (percentage < 70 && percentage > 59) ? "B"
+                        :
+                        "fail";
+
+
+
+
+    </script>
+
+</body>
+
+</html>
