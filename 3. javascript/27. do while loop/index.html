@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Do While Loop</h1>
+
+
+    <script>
+
+        // let i = 0;
+
+        // do {
+
+        //     console.log("Hello World", i);
+        //     i++;
+
+        // }
+        // while (i < 10);
+
+
+        /////////////////
+
+
+        do {
+
+            let randomNumberFrom1to10 = Math.floor(Math.random() * 10) + 1;
+            let userGuess = +prompt("Guess a number between 1 and 10");
+
+            if (randomNumberFrom1to10 === userGuess) {
+                alert("Correct Guess");
+            } else {
+                alert("Incorrect Guess");
+            }
+
+        } while (  confirm("Do you want to play again?")  );
+
+
+
+        //////////////////
+
+
+        // // validation
+        // let userBirthday = new Date(2024, 0, 1);
+        // console.log(date);
+
+        // function calculateBirthday() {
+
+        //     let currentDate = new Date();
+
+        //     if (userBirthday.getTime() > currentDate.getTime()) { // is future date
+        //         console.log("You entered future date");
+        //         return;
+        //     }
+        //     if (isInvalid) {
+        //         console.log("validation failed");
+        //         return;
+        //     }
+        //     if (isInvalid) {
+        //         console.log("validation failed");
+        //         return;
+        //     }
+        // }
+
+
+    </script>
+</body>
+
+</html>

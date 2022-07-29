@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>While Loop</h1>
+
+
+    <script>
+
+        // let i = 0;
+
+        // // // for loop can do everything but while loop is just another construct available for you in javascript
+        // // for (; i < 10;) {
+        // //     console.log("Hello World");
+        // //     i++;
+        // // }
+
+        // while (i < 10) {
+        //     console.log("Hello World", i);
+        //     i++;
+        // }
+
+        /////////////////
+
+
+        let isPlayAgain = true;
+
+        while (isPlayAgain) {
+
+            let randomNumberFrom1to10 = Math.floor(Math.random() * 10) + 1;
+            let userGuess = +prompt("Guess a number between 1 and 10");
+
+            if (randomNumberFrom1to10 === userGuess) {
+                alert("Correct Guess");
+            } else {
+                alert("Incorrect Guess");
+            }
+
+            isPlayAgain = confirm("Do you want to play again?");
+
+        }
+
+
+        //////////////
+
+
+        // for (
+        //     let isPlayAgain = true;
+        //     isPlayAgain;
+        //     isPlayAgain = confirm("Do you want to play again?")
+        // ) {
+
+        //     let randomNumberFrom1to10 = Math.floor(Math.random() * 10) + 1;
+        //     let userGuess = +prompt("Guess a number between 1 and 10");
+
+        //     if (randomNumberFrom1to10 === userGuess) {
+        //         alert("Correct Guess");
+        //     } else {
+        //         alert("Incorrect Guess");
+        //     }
+        // }
+
+
+
+    </script>
+</body>
+
+</html>
