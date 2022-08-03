@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="myCanvas" width="300px" height="300px">
+
+    </canvas>
+
+    <script>
+        // document.addEventListener("click", (event) => {
+        //     console.log("click: ", event);
+        // });
+
+        let ctx = document.getElementById("myCanvas").getContext("2d");
+        ctx.fillStyle = "rgba(0,0,0,1)"
+        // ctx.fillRect(0, 0, 100, 100);
+
+        let isMouseDown = false;
+
+        document.querySelector("#myCanvas").addEventListener("mousedown", (event) => {
+            isMouseDown = true;
+        });
+        document.querySelector("#myCanvas").addEventListener("mouseup", (event) => {
+            isMouseDown = false;
+        });
+
+        document.querySelector("#myCanvas").addEventListener("mousemove", (event) => {
+
+            if (isMouseDown) {
+                console.log("move: ", event);
+                console.log("h: ", event.offsetX);
+                console.log("w: ", event.offsetY);
+
+                ctx.fillRect(
+                    event.offsetX,
+                    event.offsetY,
+                    2, 2
+                );
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        body>img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body style="display:flex; justify-content: center; flex-direction: column;">
+
+    <img id="slider" src="./img/1.jpg" alt="" onclick="handler(event)" onmouseover="onenter()"
+        onmouseleave="onmouseaway()">
+
+
+    <p>
+        The HyperText Markup Language or HTML is the standard markup language for documents designed to be displayed in
+        a web browser. It can be assisted by technologies such as Cascading Style Sheets (CSS) and scripting languages
+        such as JavaScript.
+
+        Web browsers receive HTML documents from a web server or from local storage and render the documents into
+        multimedia web pages. HTML describes the structure of a web page semantically and originally included cues for
+        the appearance of the document.
+
+        HTML elements are the building blocks of HTML pages. With HTML constructs, images and other objects such as
+        interactive forms may be embedded into the rendered page. HTML provides a means to create structured documents
+        by denoting structural semantics for text such as headings, paragraphs, lists, links, quotes and other items.
+        HTML elements are delineated by tags, written using angle brackets. Tags such as <img /> and <input /> directly
+        introduce content into the page. Other tags such as
+        surround and provide information about document text and may include other tags as sub-elements. Browsers do not
+        display the HTML tags but use them to interpret the content of the page.
+
+        HTML can embed programs written in a scripting language such as JavaScript, which affects the behavior and
+        content of web pages. Inclusion of CSS defines the look and layout of content. The World Wide Web Consortium
+        (W3C), former maintainer of the HTML and current maintainer of the CSS standards, has encouraged the use of CSS
+        over explicit presentational HTML since 1997.[2] A form of HTML, known as HTML5, is used to display video and
+        audio, primarily using the <canvas> element, in collaboration with javascript.
+    </p>
+
+    <script>
+        function handler(event) {
+
+            // console.log(event);
+            // console.log("offsetX: ", event.offsetX);
+            // console.log("clientWidth: ", event.target.clientWidth);
+
+            let clickX = event.offsetX;
+            let imageCurrentRenderWidth = event.target.clientWidth;
+            let clickXPercentage = Math.floor((clickX * 100) / imageCurrentRenderWidth);
+
+            console.log("clickXPercentage: ", clickXPercentage, "%");
+
+            let images = ["1.jpg", "2.jpg", "3.jpg", "4.jpg"];
+
+            let currentImageUrl = document.querySelector("#slider").src;
+            currentImageUrl = currentImageUrl.split("/img/")[1];
+
+            if (clickXPercentage > 25) {
+
+                let nextImageIndex = (images.indexOf(currentImageUrl) + 1);
+                console.log(currentImageUrl);
+                console.log(nextImageIndex);
+
+                if (nextImageIndex > images.length - 1) {
+                    nextImageIndex = 0;
+                }
+
+                document.querySelector("#slider").src = `./img/${images[nextImageIndex]}`
+
+            } else {
+
+                let nextImageIndex = (images.indexOf(currentImageUrl) - 1);
+                console.log(currentImageUrl);
+                console.log(nextImageIndex);
+
+                if (nextImageIndex < 0) {
+                    nextImageIndex = images.length - 1;
+                }
+
+                document.querySelector("#slider").src = `./img/${images[nextImageIndex]}`
+            }
+        }
+
+        let isMouseOnImage = false;
+
+        setInterval(() => {
+
+            if (!isMouseOnImage) {
+
+                let images = ["1.jpg", "2.jpg", "3.jpg", "4.jpg"];
+
+                let currentImageUrl = document.querySelector("#slider").src;
+                currentImageUrl = currentImageUrl.split("/img/")[1];
+
+
+                let nextImageIndex = (images.indexOf(currentImageUrl) + 1);
+                console.log(currentImageUrl);
+                console.log(nextImageIndex);
+
+                if (nextImageIndex > images.length - 1) {
+                    nextImageIndex = 0;
+                }
+
+                document.querySelector("#slider").src = `./img/${images[nextImageIndex]}`
+            }
+        }, 4000);
+
+        function onenter() {
+            console.log("onmouseover");
+            isMouseOnImage = true;
+        }
+        function onmouseaway() {
+            console.log("onmouseaway");
+            isMouseOnImage = false;
+        }
+    </script>
+
+</body>
+
+</html>
