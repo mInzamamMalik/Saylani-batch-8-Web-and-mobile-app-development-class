@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <p id="myPara">
+
+    </p>
+
+    <script>
+        let textFromDb =
+            `Slow lorises are a group of several species of 
+        strepsirrhine primates which make up the genus Nycticebus. 
+        They have a round head, narrow snout, large eyes, and a variety 
+        of distinctive coloration patterns that are species-dependent.
+        The hands and feet of slow lorises have several adaptations that 
+        give them a pincer-like grip and enable them to grasp branches for 
+        long periods of time. Slow lorises have a toxic bite, a rare trait 
+        among mammals.`
+
+
+
+        function displayLess(e) {
+            if(e) e.preventDefault();
+            
+            let shortPara = textFromDb.substring(0, 100);
+
+            document.querySelector("#myPara").innerHTML =
+                `${shortPara}... <a href="#" onclick="displayMore(event);">see more</a>`;
+        }
+        displayLess()
+
+        function displayMore(e) {
+            e.preventDefault();
+            document.querySelector("#myPara").innerHTML =
+                `${textFromDb} <a href="#" onclick="displayLess(event);">see less</a>`;
+        }
+
+
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>

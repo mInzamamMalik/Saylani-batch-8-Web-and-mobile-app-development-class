@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <img id="myImg" src="./img/1.jpg" width="600" alt="" onclick="toggleHide(event)">
+    <img id="myImg" src="./img/2.jpg" width="600" alt="" onclick="toggleHide(event)">
+    <img id="myImg" src="./img/3.jpg" width="600" alt="" onclick="toggleHide(event)">
+    <img id="myImg" src="./img/4.jpg" width="600" alt="" onclick="toggleHide(event)">
+
+    <script>
+        function toggleHide(e) {
+            let imgElm = e.target;
+            // let imgElm = document.querySelector("#myImg");
+
+            console.log("imgElm: ", imgElm);
+
+            // if (imgElm.style.opacity === "0") {
+            //     imgElm.style.opacity = "1";
+            // } else {
+            //     imgElm.style.opacity = "0";
+            // }
+
+            (imgElm.style.opacity === "0") ? imgElm.style.opacity = "1" : imgElm.style.opacity = "0"
+        }
+    </script>
+</body>
+
+</html>
