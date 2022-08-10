@@ -10,14 +10,22 @@
         canvas {
             border: 1px solid black;
         }
+
+        .main {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 
-<body>
+<body onload="drawCanvas()">
 
-    <canvas id="myCanvas" width="300px" height="300px">
+    <div id="main" class="main">
+        <canvas id="myCanvas" width="300px" height="300px"></canvas>
+    </div>
 
-    </canvas>
+
+    <button id="clearButton" onclick="clearCanvas()">Clear</button>
 
     <script>
         // document.addEventListener("click", (event) => {
@@ -55,6 +63,15 @@
 
         });
 
+
+        function clearCanvas() {
+            let ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.clearRect(0, 0, 300, 300);
+
+            // document.querySelector("#clearButton").style.display = "none"
+        }
+
+        // undo function: https://stackoverflow.com/questions/17150610/undo-redo-for-paint-program-using-canvas#:~:text=if%20you%20draw%20something%20else,printed%20after%20each%20mouse%20off.
 
     </script>
 
