@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 </head>
 
 <body>
@@ -18,7 +19,15 @@
         <input id="email" type="email" required> <br>
 
         Password:
-        <input id="password" type="password" required min="6"> <br>
+        <input id="password" type="password" required min="6">
+
+        <span id="showPasswordButton" onclick="toggleShowPassword()" class="btn">
+            <i class="fa-solid fa-eye"></i>
+        </span>
+
+
+
+        <br>
 
         <button type="submit">Login</button>
     </form>
@@ -49,6 +58,20 @@
 
         })()
 
+
+        function toggleShowPassword() {
+
+            let type = document.getElementById("password").attributes.type.value;
+            console.log("type", type);
+
+            if (type === "password") {
+                document.getElementById("password").setAttribute("type", "text");
+                document.getElementById("showPasswordButton").innerHTML = `<i class="fa-solid fa-eye-slash"></i>`
+            } else {
+                document.getElementById("password").setAttribute("type", "password");
+                document.getElementById("showPasswordButton").innerHTML = `<i class="fa-solid fa-eye"></i>`
+            }
+        }
 
 
         function doLogin(e) {
