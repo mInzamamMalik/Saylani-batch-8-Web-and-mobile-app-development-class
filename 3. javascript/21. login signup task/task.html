@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Local Storage</h1>
+
+    <button onclick="addUser()">Add user</button>
+
+    <button onclick="move()">Move to other Page</button>
+    <script>
+
+        // localStorage.setItem("name", "Malik");
+
+        // let value = localStorage.getItem("name");
+        // console.log(value);
+        // =============
+        // let user = {
+        //     name: 'John',
+        //     email: 'abc@abc.com',
+        //     password: '123456',
+        //     gender: "male",
+        //     address: '123 Main St',
+        //     city: 'New York'
+        // };
+
+        // let userStringified = JSON.stringify(user);
+
+        // console.log("user: ", userStringified);
+
+        // localStorage.setItem("user", userStringified);
+
+        // ==========
+        // let string = localStorage.getItem("user");
+        // console.log("string: ", string);
+        // let user = JSON.parse(string);
+
+        // console.log("user: ", user);
+        // console.log("user: ", user.name);
+        // ============
+
+        let users = []
+        function getAllUsers() {
+            let userInStringForm = localStorage.getItem("users");
+            users = JSON.parse(userInStringForm) || [];
+            console.log(users);
+        }
+        getAllUsers();
+
+        function addUser() {
+
+            // get details from signup inputs
+            let newUser = {
+                name: 'John',
+                email: 'abc@abc.com',
+                password: '123456',
+                gender: "male",
+                address: '123 Main St',
+                city: 'New York'
+            }
+
+            users.push(newUser)
+
+            localStorage.setItem("users", JSON.stringify(users))
+
+        }
+
+        function move() {
+            window.location.href = "./dashboard.html";
+        }
+
+        // localStorage.removeItem("loggedInUser")
+
+        
+
+    </script>
+
+</body>
+
+</html>

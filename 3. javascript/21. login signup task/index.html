@@ -9,75 +9,111 @@
 </head>
 
 <body>
-    <h1>Local Storage</h1>
 
-    <button onclick="addUser()">Add user</button>
+    <h1>Login Signup with local storage</h1>
 
-    <button onclick="move()">Move to other Page</button>
+    <form onsubmit="doSignup(event)">
+
+        First name:
+        <input id="firstName" type="text" required> <br>
+
+        Last name:
+        <input id="lastName" type="text" required> <br>
+
+        Gender:
+        <select name="gender" id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+
+        <br>
+        Email:
+        <input id="email" type="email" required> <br>
+
+        Password:
+        <input id="password" type="password" required min="6"> <br>
+
+        Repeat Password:
+        <input id="rePassword" type="password" required min="6"> <br>
+
+        <button type="submit">Signup</button>
+    </form>
+    <br>
+    Already have an account? <a href="./login.html">Login</a>
+
+    <p id="error" style="color: red"></p>
+    <p id="result"></p>
+
+
+
     <script>
 
-        // localStorage.setItem("name", "Malik");
+        let users = [];
 
-        // let value = localStorage.getItem("name");
-        // console.log(value);
-        // =============
-        // let user = {
-        //     name: 'John',
-        //     email: 'abc@abc.com',
-        //     password: '123456',
-        //     gender: "male",
-        //     address: '123 Main St',
-        //     city: 'New York'
-        // };
+        (() => {
 
-        // let userStringified = JSON.stringify(user);
+            let item = localStorage.getItem("users");
 
-        // console.log("user: ", userStringified);
+            if (item) users = JSON.parse(item);
 
-        // localStorage.setItem("user", userStringified);
-
-        // ==========
-        // let string = localStorage.getItem("user");
-        // console.log("string: ", string);
-        // let user = JSON.parse(string);
-
-        // console.log("user: ", user);
-        // console.log("user: ", user.name);
-        // ============
-
-        let users = []
-        function getAllUsers() {
-            let userInStringForm = localStorage.getItem("users");
-            users = JSON.parse(userInStringForm) || [];
-            console.log(users);
-        }
-        getAllUsers();
-
-        function addUser() {
-
-            // get details from signup inputs
-            let newUser = {
-                name: 'John',
-                email: 'abc@abc.com',
-                password: '123456',
-                gender: "male",
-                address: '123 Main St',
-                city: 'New York'
+            let loggedInUser = localStorage.getItem("loggedInUser");
+            if (loggedInUser) {
+                window.location.href = "./dashboard.html"
+                return;
             }
 
-            users.push(newUser)
+        })()
 
-            localStorage.setItem("users", JSON.stringify(users))
 
+
+        function doSignup(e) {
+            e.preventDefault();
+
+            let firstName = document.querySelector("#firstName").value;
+            let lastName = document.querySelector("#lastName").value;
+            let gender = document.querySelector("#gender").value;
+            let email = document.querySelector("#email").value;
+            let password = document.querySelector("#password").value;
+            let rePassword = document.querySelector("#rePassword").value;
+
+
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].email === email) {
+                    document.querySelector("#error").innerText = "this email is already exist";
+                    return;
+                }
+            }
+
+            if (password !== rePassword) {
+                document.querySelector("#error").innerText = "password and repeat password doesnt match"
+                return;
+            }
+
+            let newUser = {
+                firstName,
+                lastName,
+                gender,
+                email,
+                password,
+                rePassword,
+            }
+
+
+            users.push(newUser);
+
+            localStorage.setItem("users", JSON.stringify(users));
+
+            document.querySelector("#result").innerText = "signup successful";
+
+            setTimeout(() => {
+                document.querySelector("#result").innerText = "";
+                document.querySelector("#error").innerText = "";
+            }, 5000);
+
+            e.target.reset();
         }
 
-        function move() {
-            window.location.href = "./dashboard.html";
-        }
-
-        // localStorage.removeItem("loggedInUser")
-
-        
 
     </script>
 

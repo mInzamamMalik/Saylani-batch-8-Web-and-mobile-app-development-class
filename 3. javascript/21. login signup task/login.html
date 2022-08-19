@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>Login Page</h1>
+
+    <form onsubmit="doLogin(event)">
+
+        Email:
+        <input id="email" type="email" required> <br>
+
+        Password:
+        <input id="password" type="password" required min="6"> <br>
+
+        <button type="submit">Login</button>
+    </form>
+    <br>
+    Don't have an account? <a href="./index.html">Signup</a>
+
+    <p id="error" style="color: red"></p>
+    <p id="result"></p>
+
+
+
+    <script>
+
+        let users = [];
+
+        (() => {
+
+            let item = localStorage.getItem("users");
+
+            if (item) users = JSON.parse(item);
+
+
+            let loggedInUser = localStorage.getItem("loggedInUser");
+            if (loggedInUser) {
+                window.location.href = "./dashboard.html"
+                return;
+            }
+
+        })()
+
+
+
+        function doLogin(e) {
+            e.preventDefault();
+
+            let email = document.querySelector("#email").value;
+            let password = document.querySelector("#password").value;
+
+
+            let isFound = false;
+
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].email === email) {
+                    isFound = true;
+
+                    if (users[i].password === password) {
+                        document.querySelector("#result").innerText = "Login Successful";
+
+                        localStorage.setItem("loggedInUser", JSON.stringify(users[i]));
+
+                        window.location.href = "./dashboard.html"
+
+
+                        break;
+                    } else {
+                        document.querySelector("#error").innerText = "Incorrect password";
+                        return;
+                    }
+                }
+            }
+            if (!isFound) {
+                document.querySelector("#error").innerText = "user not found";
+                return;
+            }
+
+            setTimeout(() => {
+                document.querySelector("#result").innerText = "";
+                document.querySelector("#error").innerText = "";
+            }, 5000);
+
+            e.target.reset();
+        }
+
+
+    </script>
+
+</body>
+
+</html>
