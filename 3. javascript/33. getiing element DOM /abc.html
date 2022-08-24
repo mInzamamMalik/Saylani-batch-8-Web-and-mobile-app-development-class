@@ -1,0 +1,71 @@
+<body>
+    <div id="cal">
+        <p id="p1">Southern Cal is sunny.</p>
+        <p>Northern Cal is rainy.</p>
+        <p>Eastern Cal is desert.</p>
+    </div>
+    <div id="ny">
+        <p></p>
+        <p>Rural NY is sparse.</p>
+    </div>
+
+    <p id="p10"> hello <span>wwe</span> <span>is</span> world </p>
+
+
+
+
+    <script>
+        let doc = {
+            html: {
+                head: {
+                    title: "my document"
+                },
+                body: {
+                    div1: {
+                        p10: {
+                            id: "p10",
+                            nodeName: "P",
+                            outerHTML: "<p id=\"p10\" onclick=\"seeThrough(event)\"> hello <span>is</span> world </p>",
+                            outerText: "hello is world",
+                            childNodes: [
+                                {
+                                    nodeName: "#text",
+                                    data: " hello ",
+                                    length: 7,
+                                    nodeValue: " hello ",
+                                    nodeType: 3,
+                                },
+                                {
+                                    span
+                                },
+                                {
+                                    nodeName: "#text",
+                                    data: " hello ",
+                                    length: 7,
+                                    nodeValue: " hello ",
+                                    nodeType: 3,
+                                },
+
+                            ]
+                        },
+                        p2: "Northern Cal is rainy.",
+                        p3: "Eastern Cal is desert."
+                    },
+                    div2: {
+                        p1: "Urban NY is crowded.",
+                        p2: "Rural NY is sparse."
+                    },
+                    script: `let elem = window.document.childNodes[0].childNodes[1].childNodes;
+                console.log("elem: ", elem); `
+                }
+            }
+        }
+
+        function seeThrough(e) {
+            console.log(e);
+        }
+
+
+    </script>
+
+</body>
