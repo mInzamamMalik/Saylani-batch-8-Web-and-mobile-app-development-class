@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1621274403997-37aace184f49?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1');
+            background-size: cover;
+        }
+
+        .forcastDiv {
+            width: 100%;
+            display: flex;
+            /* border: 1px solid black; */
+            overflow-x: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .forcastDiv::-webkit-scrollbar {
+            display: none;
+            /* Chrome */
+        }
+
+        .forcastDiv>.forcastCard {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            display: flex;
+            height: 250px;
+            /* width: 1200px; not working */
+            margin: 20px;
+            padding: 20px 60px 20px 60px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .forcastDiv>.forcastCard>.day {
+            font-size: 24px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 5px 10px 5px 10px;
+
+            font-family: sans-serif;
+            color: rgba(0, 0, 0, 0.593);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="forcastDiv" class="forcastDiv">
+        <!-- <div class="forcastCard">
+            <div class="day">Tue</div>
+            <img class="img" src="./img/04d@2x.png" alt="">
+            <div class="min">Min: 20</div>
+            <div class="max">Max: 20</div>
+        </div> -->
+
+
+    </div>
+
+    <script>
+        let cityName = "karachi"
+
+        axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=49cc8c821cd2aff9af04c9f98c36eb74&units=metric`)
+            .then(function (response) {
+                // handle success
+                console.log(response);
+
+                let dayWise = [];
+
+                let dateOfMonth = null;
+                let counter = -1;
+
+                response.data.list.map(eachHour => {
+                    let tempDateOfMonth = new Date(eachHour.dt_txt).getDate();
+
+                    console.log("tempDateOfMonth: ", tempDateOfMonth);
+
+                    if (dateOfMonth !== tempDateOfMonth) {
+                        counter++;
+                        dateOfMonth = tempDateOfMonth
+
+                    }
+                    if (!dayWise[counter]) { dayWise[counter] = [] }
+                    dayWise[counter].push(eachHour)
+                })
+                console.log("dayWise: ", dayWise);
+
+
+                // [
+                //   [{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }], 
+                //   [{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }], 
+                //   [{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }],[{ min:3  }], 
+                // ]
+
+
+
+                dayWise = dayWise.map((eachDay) => {
+
+                    return eachDay.reduce((previousEachHour, currentEachHour) => {
+
+                        // console.log(
+                        //     previousEachHour.main.temp,
+                        //     currentEachHour.main.temp
+                        // )
+
+                        let sumTemp = Number(previousEachHour.main.temp) + Number(currentEachHour.main.temp)
+                        let sumMinTemp = Number(previousEachHour.main.temp_min) + Number(currentEachHour.main.temp_min)
+                        let sumMaxTemp = Number(previousEachHour.main.temp_max) + Number(currentEachHour.main.temp_max)
+
+                        return {
+                            main: {
+                                temp: sumTemp,
+                                temp_min: sumMinTemp,
+                                temp_max: sumMaxTemp,
+                            },
+                            dt_txt: currentEachHour.dt_txt,
+                            length: eachDay.length
+                        }
+                    }, {
+                        main: {
+                            temp: 0,
+                            temp_min: 0,
+                            temp_max: 0,
+                        }
+                    })
+
+                })
+                console.log("final: ", dayWise);
+
+
+                dayWise.map(eachDay => {
+
+                    document.querySelector("#forcastDiv").innerHTML +=
+                        `
+                        <div class="forcastCard">
+                            <div class="day">${moment(eachDay.dt_txt).format('ddd')}</div>
+                            <img class="img" src="./img/04d@2x.png" alt="">
+                            <div class="min">Min: ${Math.floor(eachDay.main.temp_min / eachDay.length)}</div>
+                            <div class="max">Max: ${Math.floor(eachDay.main.temp_max / eachDay.length)}</div>
+                        </div>
+                        `
+
+                    // let forcastDiv = document.querySelector("#forcastDiv")
+                    // let div = document.createElement("div")
+                    // div.setAttribute("class", "forcastCard");
+
+
+
+                    // forcastDiv.appendChild(div)
+
+
+                })
+
+
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+    </script>
+
+
+</body>
+
+</html>
