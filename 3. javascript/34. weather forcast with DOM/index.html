@@ -74,7 +74,7 @@
     </div>
 
     <script>
-        let cityName = "karachi"
+        let cityName = "vancouver"
 
         axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=49cc8c821cd2aff9af04c9f98c36eb74&units=metric`)
             .then(function (response) {
@@ -130,6 +130,10 @@
                                 temp_max: sumMaxTemp,
                             },
                             dt_txt: currentEachHour.dt_txt,
+                            weather: [{
+                                icon: currentEachHour.weather[0].icon,
+                                description: currentEachHour.weather[0].description,
+                            }],
                             length: eachDay.length
                         }
                     }, {
@@ -146,25 +150,53 @@
 
                 dayWise.map(eachDay => {
 
-                    document.querySelector("#forcastDiv").innerHTML +=
-                        `
-                        <div class="forcastCard">
-                            <div class="day">${moment(eachDay.dt_txt).format('ddd')}</div>
-                            <img class="img" src="./img/04d@2x.png" alt="">
-                            <div class="min">Min: ${Math.floor(eachDay.main.temp_min / eachDay.length)}</div>
-                            <div class="max">Max: ${Math.floor(eachDay.main.temp_max / eachDay.length)}</div>
-                        </div>
-                        `
+                    // document.querySelector("#forcastDiv").innerHTML +=
+                    //     `
+                    //     <div class="forcastCard">
+                    //         <div class="day">${moment(eachDay.dt_txt).format('ddd')}</div>
+                    //         <img class="img" src="http://openweathermap.org/img/wn/${eachDay.weather[0].icon}@2x.png" alt="">
+                    //         <div class="min">${eachDay.weather[0].description}</div>
+                    //         <div class="min">Min: ${Math.floor(eachDay.main.temp_min / eachDay.length)}</div>
+                    //         <div class="max">Max: ${Math.floor(eachDay.main.temp_max / eachDay.length)}</div>
+                    //     </div>
+                    //     `
 
-                    // let forcastDiv = document.querySelector("#forcastDiv")
-                    // let div = document.createElement("div")
-                    // div.setAttribute("class", "forcastCard");
+                    let forcastDiv = document.querySelector("#forcastDiv")
 
+                    let forcastCard = document.createElement("div")
+                    forcastCard.setAttribute("class", "forcastCard");
 
+                    let day = document.createElement("div")
+                    day.setAttribute("class", "day")
+                    let dayTextNode = document.createTextNode(`${moment(eachDay.dt_txt).format('ddd')}`)
+                    day.appendChild(dayTextNode)
 
-                    // forcastDiv.appendChild(div)
+                    let img = document.createElement("img")
+                    img.setAttribute("class", "img")
+                    img.setAttribute("src", `http://openweathermap.org/img/wn/${eachDay.weather[0].icon}@2x.png`)
 
+                    let description = document.createElement("div")
+                    description.setAttribute("class", "min")
+                    let descTextNode = document.createTextNode(`${eachDay.weather[0].description}`)
+                    description.appendChild(descTextNode)
 
+                    let min = document.createElement("div")
+                    min.setAttribute("class", "min")
+                    let minTextNode = document.createTextNode(`Min: ${Math.floor(eachDay.main.temp_min / eachDay.length)}`)
+                    min.appendChild(minTextNode)
+
+                    let max = document.createElement("div")
+                    max.setAttribute("class", "max")
+                    let maxTextNode = document.createTextNode(`Max: ${Math.floor(eachDay.main.temp_max / eachDay.length)}`)
+                    max.appendChild(maxTextNode)
+
+                    forcastCard.appendChild(day)
+                    forcastCard.appendChild(img)
+                    forcastCard.appendChild(description)
+                    forcastCard.appendChild(min)
+                    forcastCard.appendChild(max)
+
+                    forcastDiv.appendChild(forcastCard)
                 })
 
 
