@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // let student = {
+        //     name: "Malik",
+        //     subject: "CS",
+        //     batch: "8",
+        //     marks: "70",
+        //     // country: "Pakistan"
+
+        //     // Demograph: {
+        //     //     country: "Pakistan"
+        //     // }
+        // }
+
+        // let key = "country";
+        // let value = "Pakistan";
+
+        // student[key] = value
+
+        // console.log(student);
+
+        // console.log("student.name: ", student.name);
+        // console.log("student.name: ", student["name"]);
+
+
+        /////////////////////
+
+
+
+
+
+        // let student = {
+        //     name: "Malik",
+        //     subject: "CS",
+        //     batch: "8",
+        //     marks: "70",
+        //     monthlyFees: 1500,
+        //     courseDurationInMonths: 4,
+
+        //     calculateFees: function () {
+
+        //         console.log(this.monthlyFees);
+
+        //         return this.monthlyFees * this.courseDurationInMonths
+        //     }
+        // };
+
+        // let result = student.calculateFees()
+
+        // console.log(result);
+
+
+        /////////////////////////////////////
+        // constructor function
+
+
+        function Course(title, subtitle, durationInMonth, monthlyFee, instructorName) {
+            this.title = title;
+            this.subtitle = subtitle;
+            this.durationInMonth = durationInMonth;
+            this.monthlyFee = monthlyFee;
+            this.instructorName = instructorName;
+            // this.calculateFees = function () {
+            //     console.log(this.monthlyFees);
+            //     return this.monthlyFees * this.courseDurationInMonths
+            // }
+        }
+
+        Course.prototype.calculateFees = function () {
+            console.log(this.monthlyFees);
+            return this.monthlyFees * this.courseDurationInMonths
+        }
+
+
+
+
+        // class Course {
+        //     constructor(title, subtitle, durationInMonth, monthlyFee, instructorName) {
+        //         this.title = title;
+        //         this.subtitle = subtitle;
+        //         this.durationInMonth = durationInMonth;
+        //         this.monthlyFee = monthlyFee;
+        //         this.instructorName = instructorName;
+        //     }
+        //     calculateFees() {
+        //         console.log(this.monthlyFees);
+        //         return this.monthlyFees * this.courseDurationInMonths
+        //     }
+        // }
+
+        let course1 = new Course(
+            "Ai Chatbot development",
+            "Lets talk to your Computer like a human",
+            4, 1500,
+            "M.Inzamam Malik"
+        );
+        console.log(course1);
+
+
+        let course2 = {
+
+            title: "Ai Chatbot development",
+            subtitle: "Lets talk to your Computer like a human",
+            durationInMonth: 4,
+            monthlyFee: 1500,
+            instructorName: "M.Inzamam Malik"
+        }
+        console.log(course2);
+
+        let course3 = {
+            title: "Web Development",
+            subtitle: "Lets talk to your Computer like a human",
+            durationInMonth: 4,
+            monthlyFee: 1500,
+            instructorName: "M.Inzamam Malik",
+            calculateFees: function () {
+                console.log(this.monthlyFees);
+                return this.monthlyFees * this.courseDurationInMonths
+            }
+        }
+        console.log(course3);
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
