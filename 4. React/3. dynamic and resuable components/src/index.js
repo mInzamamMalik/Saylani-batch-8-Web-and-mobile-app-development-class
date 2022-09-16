@@ -36,8 +36,8 @@ let Post = ({ profilePhoto, name, postDate, postText, postImage }) => (
 );
 
 
-function Page() {
-  return <div className='page'>
+let Page = () => (
+  <div className='page'>
 
     <Post
       name="Arsalan"
@@ -72,7 +72,7 @@ We address our most frequently seen support requests here, so it is a great plac
 
 
   </div>
-}
+)
 
 
 ReactDOM.render(<Page />, document.querySelector('#root'));
