@@ -23,7 +23,7 @@ function Home() {
             .catch(err => {
                 console.log("error: ", err);
             })
-
+            
     }, [])
 
 
@@ -36,10 +36,10 @@ function Home() {
     return (
         <div className={`room ${(isLit) ? "lit" : "dark"}`}>
 
-
+            
             <button onClick={clickHandler} >Toggle Dark Mode</button>
 
-
+            
 
             {
                 posts.map((eachPost, i) => (
