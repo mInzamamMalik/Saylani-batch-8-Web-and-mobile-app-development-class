@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
-import './App.css';
-
 import axios from 'axios';
 import moment from 'moment';
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs, doc, onSnapshot, query } from "firebase/firestore";
+
+import {
+  getFirestore, collection,
+  addDoc, getDocs, doc,
+  onSnapshot, query, serverTimestamp,
+  orderBy, deleteDoc, updateDoc
+
+} from "firebase/firestore";
+
+import './App.css';
+
 
 
 
@@ -34,6 +41,11 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [editing, setEditing] = useState({
+    editingId: null,
+    editingText: ""
+  })
+
 
 
 
@@ -58,12 +70,17 @@ function App() {
     let unsubscribe = null;
     const getRealtimeData = async () => {
 
-      const q = query(collection(db, "posts"));
+      const q = query(collection(db, "posts"), orderBy("createdOn", "desc"));
+
       unsubscribe = onSnapshot(q, (querySnapshot) => {
         const posts = [];
 
         querySnapshot.forEach((doc) => {
-          posts.push(doc.data());
+          // posts.unshift(doc.data());
+          // posts.push(doc.data());
+
+          posts.push({ id: doc.id, ...doc.data() });
+
         });
 
         setPosts(posts);
@@ -92,7 +109,8 @@ function App() {
 
       const docRef = await addDoc(collection(db, "posts"), {
         text: postText,
-        createdOn: new Date().getTime(),
+        // createdOn: new Date().getTime(),
+        createdOn: serverTimestamp(),
       });
       console.log("Document written with ID: ", docRef.id);
 
@@ -100,6 +118,28 @@ function App() {
       console.error("Error adding document: ", e);
     }
 
+
+  }
+
+  const deletePost = async (postId) => {
+
+    console.log("postId: ", postId);
+
+    await deleteDoc(doc(db, "posts", postId));
+
+  }
+
+  const updatePost = async (e) => {
+    e.preventDefault();
+
+    await updateDoc(doc(db, "posts", editing.editingId), {
+      text: editing.editingText
+    });
+
+    setEditing({
+      editingId: null,
+      editingText: ""
+    })
 
   }
 
@@ -130,13 +170,54 @@ function App() {
               href={eachPost?.url}
               target="_blank" rel="noreferrer"
             >
-              {eachPost?.text}
+              {(eachPost.id === editing.editingId) ?
+                <form onSubmit={updatePost}>
+
+                  <input
+                    type="text"
+                    value={editing.editingText}
+                    onChange={(e) => {
+                      setEditing({
+                        ...editing,
+                        editingText: e.target.value
+                      })
+                    }}
+                    placeholder="please enter updated value" />
+
+                  <button type="submit">Update</button>
+                </form>
+                :
+                eachPost?.text}
             </h3>
 
             <span>{
-              moment(eachPost?.datePublished)
+              moment(
+                (eachPost?.createdOn?.seconds) ?
+                  eachPost?.createdOn?.seconds * 1000
+                  :
+                  undefined
+              )
                 .format('Do MMMM, h:mm a')
             }</span>
+
+            <br />
+            <br />
+            <button onClick={() => {
+
+              deletePost(eachPost?.id)
+
+            }}>Delete</button>
+
+            {(editing.editingId === eachPost?.id) ? null :
+              <button onClick={() => {
+
+                setEditing({
+                  editingId: eachPost?.id,
+                  editingText: eachPost?.text
+                })
+
+              }} >Edit</button>
+            }
 
           </div>
         ))}
