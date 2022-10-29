@@ -43,6 +43,7 @@ function App() {
   const [postText, setPostText] = useState("");
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [file, setFile] = useState(null);
 
   const [editing, setEditing] = useState({
     editingId: null,
@@ -71,19 +72,52 @@ function App() {
     }),
     onSubmit: async (values) => {
 
-      console.log("values: ", values)
-      try {
 
-        const docRef = await addDoc(collection(db, "posts"), {
-          title: values.title,
-          text: values.text,
-          createdOn: serverTimestamp(),
-        });
-        console.log("Document written with ID: ", docRef.id);
 
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
+
+      const cloudinaryData = new FormData();
+      cloudinaryData.append("file", file);
+      cloudinaryData.append("upload_preset", "profilepicturesabc");
+      cloudinaryData.append("cloud_name", "malikasinger");
+      console.log(cloudinaryData);
+
+      axios.post(`https://api.cloudinary.com/v1_1/malikasinger/image/upload`,
+        cloudinaryData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
+        .then(async res => {
+         
+          console.log("from then", res.data);
+
+          console.log("values: ", values)
+          try {
+
+            const docRef = await addDoc(collection(db, "posts"), {
+              title: values.title,
+              text: values.text,
+              img: res?.data?.url,
+              createdOn: serverTimestamp(),
+            });
+            console.log("Document written with ID: ", docRef.id);
+
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+
+
+        })
+        .catch(err => {
+          console.log("from catch", err);
+        })
+
+
+
+
+
+
+
+
 
     },
   });
@@ -189,6 +223,9 @@ function App() {
   return (
     <div>
 
+
+
+
       <form onSubmit={formik.handleSubmit}>
 
         Title:
@@ -225,6 +262,19 @@ function App() {
 
         <br />
 
+        Profile Picture:
+        <input
+          type="file"
+          name="profilePicture"
+          onChange={(e) => {
+            console.log(e.currentTarget.files[0])
+
+            setFile(e.currentTarget.files[0])
+          }}
+        />
+
+        <br />
+
 
         <button type="submit">Post</button>
       </form>
@@ -234,7 +284,7 @@ function App() {
 
         {posts.map((eachPost, i) => (
           <div className="post" key={i}>
-            
+
             <h3>{eachPost.title}</h3>
 
             <p
@@ -270,6 +320,8 @@ function App() {
               )
                 .format('Do MMMM, h:mm a')
             }</span>
+
+            <img src={eachPost?.img} alt="" />
 
             <br />
             <br />
