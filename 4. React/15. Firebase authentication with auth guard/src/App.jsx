@@ -1,8 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+
 
 import Home from "./components/home";
 import About from "./components/about";
@@ -15,24 +16,66 @@ import Signup from "./components/signup";
 function App() {
 
   const [isLogin, setIsLogin] = useState(false);
+  const [fullName, setFullName] = useState("");
+
+
+  useEffect(() => {
+
+    const auth = getAuth();
+    const unSubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+
+        const uid = user.uid;
+        console.log("auth change: login", user);
+        setIsLogin(true)
+
+        console.log("auth.currentUser: ", auth.currentUser.displayName);
+        setFullName(auth.currentUser.displayName)
+
+
+      } else {
+        console.log("auth change: logout");
+        // User is signed out
+        setIsLogin(false)
+
+      }
+    });
+
+    return () => {
+      console.log("Cleanup function called")
+      unSubscribe();
+    }
+
+  }, [])
+
+  const logoutHandler = () => {
+
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      console.log("signout successful");
+    }).catch((error) => {
+      // An error happened.
+      console.log("signout failed");
+    });
+
+  }
 
 
   return (
     <div>
 
-      <button onClick={() => { setIsLogin(!isLogin) }}>Toggle login test</button>
-
-
       {
         (isLogin) ?
-          <ul>
+          <ul className='navBar'>
             <li> <Link to={`/`}>Home</Link> </li>
             <li> <Link to={`/gallery`}>Gallery</Link> </li>
             <li> <Link to={`/about`}>About</Link> </li>
             <li> <Link to={`/profile`}>Profile</Link> </li>
+            <li> {fullName} <button onClick={logoutHandler}>Logout</button> </li>
           </ul>
           :
-          <ul>
+          <ul className='navBar'>
             <li> <Link to={`/`}>Login</Link> </li>
             <li> <Link to={`/signup`}>Signup</Link> </li>
           </ul>

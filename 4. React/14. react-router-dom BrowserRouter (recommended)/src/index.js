@@ -6,30 +6,6 @@ import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter } from "react-router-dom";
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyD9VYC7uILok4whM-WY7gVXxJDLwoScCFk",
-  authDomain: "fir-authexample-delthis.firebaseapp.com",
-  projectId: "fir-authexample-delthis",
-  storageBucket: "fir-authexample-delthis.appspot.com",
-  messagingSenderId: "328376940685",
-  appId: "1:328376940685:web:68067b53a454b270ce0ac4"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-
-
-
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
