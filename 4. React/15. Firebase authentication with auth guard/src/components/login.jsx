@@ -3,8 +3,9 @@ import {
     getAuth, signInWithEmailAndPassword,
     FacebookAuthProvider, signInWithPopup
 } from "firebase/auth";
+import { Button, TextField } from '@mui/material';
 
-
+import './login.css'
 
 function Login() {
 
@@ -78,15 +79,38 @@ function Login() {
         <>
             <h4>This is Login page</h4>
 
-            <form onSubmit={loginHandler}>
+            <form onSubmit={loginHandler} className="loginForm">
 
 
-                Email: <input type="email" name="username" placeholder="email" onChange={(e) => { setEmail(e.target.value) }} />
+                <TextField
+                    className="TextField"
+                    id="outlined-basic"
+                    label="Email"
+                    variant="outlined"
+                    type="email"
+                    name="username"
+                    placeholder="email"
+                    onChange={(e) => { setEmail(e.target.value) }}
+                />
+
+
                 <br />
-                Password: <input type="password" name="current-password" autoComplete="current-password" placeholder="password" onChange={(e) => { setPassword(e.target.value) }} />
+
+                <TextField
+                    className="TextField"
+                    id="outlined-basic"
+                    label="Password"
+                    variant="outlined"
+                    type="password"
+                    name="current-password"
+                    autoComplete="current-password"
+                    placeholder="password"
+                    onChange={(e) => { setPassword(e.target.value) }}
+                />
 
                 <br />
-                <button type="submit">Login</button>
+                <Button variant="outlined" type="submit">Login</Button>
+
             </form>
 
 
