@@ -4,7 +4,8 @@
   "description": "dfsfsdfsdf",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
   },
   "author": "",
   "license": "ISC",
