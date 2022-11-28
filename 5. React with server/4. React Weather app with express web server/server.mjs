@@ -6,14 +6,46 @@ const app = express()
 const port = process.env.PORT || 5001;
 
 app.use(cors());
+app.use(express.json());
 
 app.get('/abc', (req, res) => {
     console.log("request ip: ", req.ip);
     res.send('Hello World! ' + new Date().toString());
 })
-app.get('/weather', (req, res) => {
+
+// url params:
+// http://localhost:5001/weather/karachi/75600
+// app.get('/weather/:cityName/:zip', (req, res) => {
+
+
+// query parameters:
+// http://localhost:5001/weather?zip=75600&city=karachi
+// app.get('/weather', (req, res) => {
+//       console.log(req.query.city)
+//       console.log(req.query.zip)
+
+// body:
+// http://localhost:5001/weather
+// {
+//   cityName: "karachi",
+//   zip: 75600
+// }
+
+// app.use(express.json());
+// app.get('/weather', (req, res) => {
+//       console.log(req.body.cityName)
+//       console.log(req.body.zip)
+//
+// parsing body is must on server
+
+
+app.get('/weather/:cityName', (req, res) => {
     console.log("request ip: ", req.ip);
+    console.log("param: ", req.params.cityName);
+
+    
     res.send({
+        city: req.params.cityName,
         temp: 30,
         min: 26,
         max: 31,
