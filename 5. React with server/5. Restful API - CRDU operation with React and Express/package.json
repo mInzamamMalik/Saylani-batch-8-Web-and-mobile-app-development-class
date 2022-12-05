@@ -1,0 +1,17 @@
+{
+  "name": "1.-hello-world-server",
+  "version": "1.0.0",
+  "description": "dfsfsdfsdf",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
