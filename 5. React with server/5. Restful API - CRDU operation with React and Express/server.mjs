@@ -17,8 +17,8 @@ app.post('/product', (req, res) => {
 
     if ( // validation
         !body.name
-        && !body.price
-        && !body.description
+        || !body.price
+        || !body.description
     ) {
         res.status(400).send({
             message: "required parameters missing",
@@ -31,7 +31,7 @@ app.post('/product', (req, res) => {
     console.log(body.description)
 
     products.push({
-        id: new Date().getTime(),
+        id: `${new Date().getTime()}`,
         name: body.name,
         price: body.price,
         description: body.description
@@ -48,6 +48,7 @@ app.get('/products', (req, res) => {
         data: products
     })
 })
+
 app.get('/product/:id', (req, res) => {
 
     const id = req.params.id;
@@ -103,8 +104,8 @@ app.put('/product/:id', (req, res) => {
 
     if ( // validation
         !body.name
-        && !body.price
-        && !body.description
+        || !body.price
+        || !body.description
     ) {
         res.status(400).send({
             message: "required parameters missing"
@@ -141,13 +142,6 @@ app.put('/product/:id', (req, res) => {
         message: "product added successfully"
     });
 })
-
-
-
-const __dirname = path.resolve();
-app.use('/', express.static(path.join(__dirname, './web/build')))
-app.use('*', express.static(path.join(__dirname, './web/build')))
-
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
