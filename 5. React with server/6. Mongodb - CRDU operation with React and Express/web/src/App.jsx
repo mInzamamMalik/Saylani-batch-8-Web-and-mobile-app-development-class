@@ -49,7 +49,7 @@ function App() {
 
   useEffect(() => {
 
-    getAllProducts()
+    // getAllProducts()
 
   }, [loadProduct])
 
