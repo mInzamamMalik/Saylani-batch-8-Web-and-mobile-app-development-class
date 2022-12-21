@@ -4,6 +4,11 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
+import {
+    stringToHash,
+    varifyHash,
+} from "bcrypt-inzi"
+
 
 const SECRET = process.env.SECRET || "topsecret";
 
@@ -12,7 +17,6 @@ const app = express()
 const port = process.env.PORT || 5001;
 const mongodbURI = process.env.mongodbURI || "mongodb+srv://dbuser:dbpassword@cluster0.gq9n2zr.mongodb.net/abcdatabase?retryWrites=true&w=majority";
 
-app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
@@ -20,9 +24,6 @@ app.use(cookieParser());
 //     origin: ['http://localhost:3000', "*"],
 //     credentials: true
 // }));
-
-
-let products = []; // TODO: connect with mongodb instead
 
 let productSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -64,6 +65,8 @@ app.post("/signup", (req, res) => {
         return;
     }
 
+    req.body.email = req.body.email.toLowerCase();
+
     // check if user already exist // query email user
     userModel.findOne({ email: body.email }, (err, user) => {
         if (!err) {
@@ -82,7 +85,7 @@ app.post("/signup", (req, res) => {
                     userModel.create({
                         firstName: body.firstName,
                         lastName: body.lastName,
-                        email: body.email.toLowerCase(),
+                        email: body.email,
                         password: hashString
                     },
                         (err, result) => {
@@ -105,10 +108,10 @@ app.post("/signup", (req, res) => {
     })
 });
 
-
 app.post("/login", (req, res) => {
 
     let body = req.body;
+    body.email = body.email.toLowerCase();
 
     if (!body.email || !body.password) { // null check - undefined, "", 0 , false, null , NaN
         res.status(400).send(
@@ -124,8 +127,7 @@ app.post("/login", (req, res) => {
     // check if user exist
     userModel.findOne(
         { email: body.email },
-        // { email:1, firstName:1, lastName:1, age:1, password:0 },
-        "email firstName lastName age password",
+        "firstName lastName email password",
         (err, data) => {
             if (!err) {
                 console.log("data: ", data);
@@ -137,7 +139,7 @@ app.post("/login", (req, res) => {
 
                         if (isMatched) {
 
-                            var token = jwt.sign({
+                            const token = jwt.sign({
                                 _id: data._id,
                                 email: data.email,
                                 iat: Math.floor(Date.now() / 1000) - 30,
@@ -180,11 +182,57 @@ app.post("/login", (req, res) => {
                 return;
             }
         })
-
-
-
 })
 
+app.post("/logout", (req, res) => {
+
+    res.cookie('Token', '', {
+        maxAge: 1,
+        httpOnly: true
+    });
+
+    res.send({ message: "Logout successful" });
+})
+
+app.use((req, res, next) => {
+
+    console.log("req.cookies: ", req.cookies);
+
+    if (!req?.cookies?.Token) {
+        res.status(401).send({
+            message: "include http-only credentials with every request"
+        })
+        return;
+    }
+
+    jwt.verify(req.cookies.Token, SECRET, function (err, decodedData) {
+        if (!err) {
+
+            console.log("decodedData: ", decodedData);
+
+            const nowDate = new Date().getTime() / 1000;
+
+            if (decodedData.exp < nowDate) {
+
+                res.status(401);
+                res.cookie('Token', '', {
+                    maxAge: 1,
+                    httpOnly: true
+                });
+                res.send({ message: "token expired" })
+
+            } else {
+
+                console.log("token approved");
+
+                req.body.token = decodedData
+                next();
+            }
+        } else {
+            res.status(401).send("invalid token")
+        }
+    });
+})
 
 
 app.post('/product', (req, res) => {
