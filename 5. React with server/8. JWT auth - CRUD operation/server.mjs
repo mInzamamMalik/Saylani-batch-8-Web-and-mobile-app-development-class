@@ -20,10 +20,10 @@ const mongodbURI = process.env.mongodbURI || "mongodb+srv://dbuser:dbpassword@cl
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use(cors({
-//     origin: ['http://localhost:3000', "*"],
-//     credentials: true
-// }));
+app.use(cors({
+    origin: ['http://localhost:3000', "*"],
+    credentials: true
+}));
 
 let productSchema = new mongoose.Schema({
     name: { type: String, required: true },
