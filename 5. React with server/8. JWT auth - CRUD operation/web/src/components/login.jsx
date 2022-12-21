@@ -3,25 +3,40 @@ import { useState } from "react";
 import { Button, TextField } from '@mui/material';
 
 import './login.css'
+import axios from "axios";
+
+const baseUrl = 'http://localhost:5001'
+
 
 function Login() {
+
+    const [result, setResult] = useState("");
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-
-
-
-
-    const loginHandler = (e) => {
+    const loginHandler = async (e) => {
         e.preventDefault();
 
-        
+        try {
+            let response = await axios.post(`${baseUrl}/login`, {
+                email: email,
+                password: password
+            }, {
+                withCredentials: true
+            })
 
+
+            console.log("login successful");
+            setResult("login successful")
+
+        } catch (e) {
+            console.log("e: ", e);
+        }
 
         // e.reset();
     }
-  
+
 
     return (
         <>
@@ -63,6 +78,7 @@ function Login() {
             </form>
 
 
+            <p>{result}</p>
         </>
     )
 }

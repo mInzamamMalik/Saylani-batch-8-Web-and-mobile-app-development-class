@@ -165,7 +165,7 @@ app.post("/login", (req, res) => {
                             });
                             return;
                         } else {
-                            console.log("user not found");
+                            console.log("password did not match");
                             res.status(401).send({ message: "Incorrect email or password" });
                             return;
                         }

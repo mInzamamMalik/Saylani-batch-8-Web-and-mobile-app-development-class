@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from 'axios';
 
 
+const baseUrl = 'http://localhost:5001'
+
+
 function Signup() {
 
     const [result, setResult] = useState("");
@@ -9,8 +12,6 @@ function Signup() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const baseUrl = 'http://localhost:5001'
 
     
     const signupHandler = async (e) => {
@@ -22,8 +23,6 @@ function Signup() {
                 lastName: name,
                 email: email,
                 password: password
-            }, {
-                withCredentials: true
             })
 
 
