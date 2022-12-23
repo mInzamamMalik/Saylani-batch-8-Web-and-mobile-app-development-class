@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { GlobalContext } from '../context/Context';
 
 import { Button, TextField } from '@mui/material';
 
@@ -9,6 +10,7 @@ const baseUrl = 'http://localhost:5001'
 
 
 function Login() {
+    let { state, dispatch } = useContext(GlobalContext);
 
     const [result, setResult] = useState("");
 
@@ -24,6 +26,11 @@ function Login() {
                 password: password
             }, {
                 withCredentials: true
+            })
+
+            dispatch({
+                type: 'USER_LOGIN',
+                payload: null
             })
 
 
