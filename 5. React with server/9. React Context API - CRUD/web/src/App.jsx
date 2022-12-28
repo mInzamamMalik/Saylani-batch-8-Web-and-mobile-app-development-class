@@ -13,29 +13,37 @@ import Signup from "./components/signup";
 
 
 function App() {
-
   let { state, dispatch } = useContext(GlobalContext);
 
   const [fullName, setFullName] = useState("");
 
 
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
+    
+    try {
+      let response = await axios.post(`${state.baseUrl}/logout`, {
+        withCredentials: true
+      })
+      console.log("response: ", response);
+
+      dispatch({
+        type: 'USER_LOGOUT'
+      })
+    } catch (error) {
+      console.log("axios error: ", error);
+    }
 
   }
 
   useEffect(() => {
-
-    const baseUrl = 'http://localhost:5001'
-
+    
     const getProfile = async () => {
-
       try {
-        let response = await axios.get(`${baseUrl}/products`, {
+        let response = await axios.get(`${state.baseUrl}/products`, {
           withCredentials: true
         })
 
         console.log("response: ", response);
-
 
         dispatch({
           type: 'USER_LOGIN'

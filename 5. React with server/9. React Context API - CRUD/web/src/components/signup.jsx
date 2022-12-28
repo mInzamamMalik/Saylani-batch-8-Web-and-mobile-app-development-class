@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from 'axios';
+import { GlobalContext } from '../context/Context';
 
 
-const baseUrl = 'http://localhost:5001'
 
 
 function Signup() {
+    let { state, dispatch } = useContext(GlobalContext);
 
     const [result, setResult] = useState("");
 
@@ -18,7 +19,7 @@ function Signup() {
         e.preventDefault();
 
         try {
-            let response = await axios.post(`${baseUrl}/signup`, {
+            let response = await axios.post(`${state.baseUrl}/signup`, {
                 firstName: name,
                 lastName: name,
                 email: email,
