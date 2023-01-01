@@ -156,18 +156,11 @@ router.post('/login', (req, res) => {
 
 router.post('/logout', (req, res) => {
 
-    // res.cookie('Token', 'dfsdfds', {
-    //     httpOnly: true,
-    //     sameSite: 'none',
-    //     secure: true
-    // });
-
-    res.cookie('Token', '', {
-        maxAge: 1,
+    res.clearCookie('Token', {
         httpOnly: true,
         sameSite: 'none',
         secure: true
-    });
+    })
     res.send({ message: "Logout successful" });
 })
 
