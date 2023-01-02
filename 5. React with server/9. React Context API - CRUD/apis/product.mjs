@@ -1,5 +1,7 @@
 import express from 'express';
 import { userModel, productModel } from './../dbRepo/models.mjs'
+import mongoose from 'mongoose';
+
 
 const router = express.Router()
 
@@ -33,6 +35,7 @@ router.post('/product', (req, res) => {
         name: body.name,
         price: body.price,
         description: body.description,
+        owner: new mongoose.Types.ObjectId(body.token._id)
     },
         (err, saved) => {
             if (!err) {
@@ -51,18 +54,28 @@ router.post('/product', (req, res) => {
 
 router.get('/products', (req, res) => {
 
-    productModel.find({}, (err, data) => {
-        if (!err) {
-            res.send({
-                message: "got all products successfully",
-                data: data
-            })
-        } else {
-            res.status(500).send({
-                message: "server error"
-            })
+    const userId = new mongoose.Types.ObjectId(req.body.token._id);
+
+    productModel.find(
+        { owner: userId, isDeleted: false },
+        {},
+        {
+            sort: { "_id": -1 },
+            limit: 100,
+            skip: 0
         }
-    });
+        , (err, data) => {
+            if (!err) {
+                res.send({
+                    message: "got all products successfully",
+                    data: data
+                })
+            } else {
+                res.status(500).send({
+                    message: "server error"
+                })
+            }
+        });
 })
 
 router.get('/product/:id', (req, res) => {
