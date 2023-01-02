@@ -28,22 +28,6 @@ function App() {
         })
       console.log("response: ", response);
 
-
-      const CACHE = "pwabuilder-offline-page";
-      CacheStorage.delete(CACHE)
-
-
-
-      // const event = new Event('logout');
-      // navigator.serviceWorker.dispatchEvent(event);
-
-      // navigator.serviceWorker.getRegistrations()
-      //   .then(registrations => {
-      //     registrations.forEach(registration => {
-      //       registration.unregister()
-      //     })
-      //   })
-
       dispatch({
         type: 'USER_LOGOUT'
       })
@@ -57,21 +41,19 @@ function App() {
 
     const getProfile = async () => {
       try {
+        let response = await axios.get(
+          `${state.baseUrl}/profile`,
+          {
+            withCredentials: true,
+            headers: {
+              'Cache-Control': 'no-cache',
+              'Pragma': 'no-cache',
+              'Expires': '0',
+            }
+          });
 
-        const config = {
-          url: `${state.baseUrl}/products`,
-          data: {},
-          method: "GET",
-          headers: {
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache',
-            'Expires': '0',
-          },
-          withCredentials: true,
-        }
 
-        let response = await axios(config)
-        console.log("status: ", response.status);
+        console.log("response: ", response);
 
         dispatch({
           type: 'USER_LOGIN'

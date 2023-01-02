@@ -20,15 +20,6 @@ self.addEventListener('install', async (event) => {
   );
 });
 
-
-self.addEventListener('logout', async (event) => {
-  console.log("logout event listener");
-  event.waitUntil(
-    caches.delete(CACHE)
-  );
-});
-
-
 if (workbox.navigationPreload.isSupported()) {
   workbox.navigationPreload.enable();
 }

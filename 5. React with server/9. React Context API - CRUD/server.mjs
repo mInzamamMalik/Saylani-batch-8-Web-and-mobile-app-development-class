@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 
 import authApis from './apis/auth.mjs';
 import productApis from './apis/product.mjs';
+import { userModel } from "./dbRepo/models.mjs";
 
 const SECRET = process.env.SECRET || "topsecret";
 
@@ -66,6 +67,45 @@ app.use('/api/v1', (req, res, next) => {
     });
 })
 app.use('/api/v1', productApis)
+
+
+const getUser = async (req, res) => {
+
+    let _id = "";
+    if (req.params.id) {
+        _id = req.params.id
+    } else {
+        _id = req.body.token._id
+    }
+
+    try {
+        const user = await userModel.findOne({ _id: _id }, "email firstName lastName -_id").exec()
+        if (!user) {
+            res.status(404).send({})
+            return;
+        } else {
+
+            res.set({
+                "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0",
+                "Surrogate-Control": "no-store"
+            });
+            res.status(200).send(user)
+        }
+
+    } catch (error) {
+
+        console.log("error: ", error);
+        res.status(500).send({
+            message: "something went wrong on server",
+        });
+    }
+}
+
+
+app.get('/api/v1/profile', getUser)
+app.get('/api/v1/profile/:id', getUser)
 
 
 const __dirname = path.resolve();

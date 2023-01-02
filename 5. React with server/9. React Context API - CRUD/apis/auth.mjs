@@ -156,11 +156,11 @@ router.post('/login', (req, res) => {
 
 router.post('/logout', (req, res) => {
 
-    res.clearCookie('Token', {
+  res.clearCookie('Token', {
         httpOnly: true,
         sameSite: 'none',
         secure: true
-    })
+    })  
     res.send({ message: "Logout successful" });
 })
 
