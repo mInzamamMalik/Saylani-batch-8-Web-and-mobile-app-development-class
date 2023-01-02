@@ -15,6 +15,7 @@ import Signup from "./components/signup";
 function App() {
   let { state, dispatch } = useContext(GlobalContext);
 
+  console.log("state: ", state);
   const [fullName, setFullName] = useState("");
 
 
@@ -52,11 +53,11 @@ function App() {
             }
           });
 
-
         console.log("response: ", response);
 
         dispatch({
-          type: 'USER_LOGIN'
+          type: 'USER_LOGIN',
+          payload: response.data
         })
       } catch (error) {
 
@@ -80,21 +81,27 @@ function App() {
 
       {
         (state.isLogin === true) ?
-          <ul className='navBar'>
-            <li> <Link to={`/`}>Home</Link> </li>
-            <li> <Link to={`/gallery`}>Gallery</Link> </li>
-            <li> <Link to={`/about`}>About</Link> </li>
-            <li> <Link to={`/profile`}>Profile</Link> </li>
-            <li> {fullName} <button onClick={logoutHandler}>Logout</button> </li>
-          </ul>
+          <nav className='navBar'>
+            <ul>
+              <li> <Link to={`/`}>Home</Link> </li>
+              <li> <Link to={`/gallery`}>Gallery</Link> </li>
+              <li> <Link to={`/about`}>About</Link> </li>
+              <li> <Link to={`/profile`}>Profile</Link> </li>
+            </ul>
+            <div>
+              {state?.user?.firstName} {state?.user?.lastName}  <button onClick={logoutHandler}>Logout</button>
+            </div>
+          </nav>
           : null
       }
       {
         (state.isLogin === false) ?
-          <ul className='navBar'>
-            <li> <Link to={`/`}>Login</Link> </li>
-            <li> <Link to={`/signup`}>Signup</Link> </li>
-          </ul> : null
+          <nav className='navBar'>
+            <ul>
+              <li> <Link to={`/`}>Login</Link> </li>
+              <li> <Link to={`/signup`}>Signup</Link> </li>
+            </ul>
+          </nav> : null
       }
 
       {(state.isLogin === true) ?
