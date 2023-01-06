@@ -33,6 +33,13 @@ const userSchema = new mongoose.Schema({
 });
 export const userModel = mongoose.model('Users', userSchema);
 
+const otpSchema = new mongoose.Schema({
+    otp: String,
+    email: String,
+    createdOn: { type: Date, default: Date.now },
+});
+export const otpModel = mongoose.model('Opts', otpSchema);
+
 
 const mongodbURI = process.env.mongodbURI || "mongodb+srv://dbuser:dbpassword@cluster0.gq9n2zr.mongodb.net/abcdatabase?retryWrites=true&w=majority";
 /////////////////////////////////////////////////////////////////////////////////////////////////

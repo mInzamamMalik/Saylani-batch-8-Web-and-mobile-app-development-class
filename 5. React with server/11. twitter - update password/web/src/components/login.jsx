@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { GlobalContext } from '../context/Context';
 
 import { Button, TextField } from '@mui/material';
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 
 import './login.css'
 import axios from "axios";
@@ -81,6 +82,10 @@ function Login() {
                 <Button variant="outlined" type="submit">Login</Button>
 
             </form>
+            <br />
+            <button>
+                <Link to={`/forget-password`}>Forget Password</Link>
+            </button>
 
 
             <p>{result}</p>
