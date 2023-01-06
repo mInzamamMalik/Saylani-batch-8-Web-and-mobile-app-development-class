@@ -11,6 +11,7 @@ import About from "./components/about";
 import Gallery from "./components/gallery";
 import Login from "./components/login";
 import Signup from "./components/signup";
+import ChangePassword from "./components/changePassword";
 
 
 function App() {
@@ -135,6 +136,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/change-password" element={<ChangePassword />} />
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
         : null}

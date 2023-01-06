@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import axios from "axios";
 import { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from './../context/Context';
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 
 import './profile.css';
 import coverImage from './../img/cover.jpg';
@@ -128,7 +129,14 @@ function Home() {
 
             <div className='banner'>
                 <img className='cover' src={coverImage} alt="" />
-                <img className='profile' src={profilePhoto} alt="" />
+            </div>
+            <div className='profile' >
+                <img src={profilePhoto} alt="" />
+                <span>{state?.user?.firstName} {state?.user?.lastName}  <br /> {state?.user?.email} </span>
+                
+                <button>
+                    <Link to={`/change-password`}>Change password</Link>
+                </button>
             </div>
 
 
