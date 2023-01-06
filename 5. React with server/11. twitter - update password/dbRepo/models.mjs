@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 
 let tweetSchema = new mongoose.Schema({
     text: { type: String, required: true },
-    // owner: { type: mongoose.ObjectId, ref: "Users", required: true },
+    owner: { type: mongoose.ObjectId, ref: "Users", required: true },
     
-    ownerName: String,
-    profilePhoto: String,
+    // ownerName: String,
+    // profilePhoto: String,
 
     image: { type: String },
     // likes: [{ type: mongoose.ObjectId }],

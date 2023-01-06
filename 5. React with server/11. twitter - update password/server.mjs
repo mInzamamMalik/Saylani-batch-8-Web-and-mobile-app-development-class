@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import authApis from './apis/auth.mjs';
 import tweetApi from './apis/tweet.mjs';
 import { userModel } from "./dbRepo/models.mjs";
+import { stringToHash, varifyHash } from 'bcrypt-inzi';
 
 const SECRET = process.env.SECRET || "topsecret";
 
@@ -69,6 +70,8 @@ app.use('/api/v1', (req, res, next) => {
 app.use('/api/v1', tweetApi)
 
 
+
+
 const getUser = async (req, res) => {
 
     let _id = "";
@@ -103,9 +106,46 @@ const getUser = async (req, res) => {
     }
 }
 
-
 app.get('/api/v1/profile', getUser)
 app.get('/api/v1/profile/:id', getUser)
+
+app.post('/api/v1/change-password', async (req, res) => {
+
+    try {
+        const body = req.body;
+        const currentPassword = body.currentPassword;
+        const newPassword = body.password;
+        const _id = req.body.token._id
+
+        // check if user exist
+        const user = await userModel.findOne(
+            { _id: _id },
+            "password",
+        ).exec()
+
+        if (!user) throw new Error("User not found")
+
+        const isMatched = await varifyHash(currentPassword, user.password)
+        if (!isMatched) throw new Error("password mismatch")
+
+        const newHash = await stringToHash(newPassword);
+
+        await userModel.updateOne({ _id: _id }, { password: newHash }).exec()
+
+        // success
+        res.send({
+            message: "password changed success",
+        });
+        return;
+
+    } catch (error) {
+        console.log("error: ", error);
+        res.status(500).send()
+    }
+
+})
+
+
 
 
 const __dirname = path.resolve();

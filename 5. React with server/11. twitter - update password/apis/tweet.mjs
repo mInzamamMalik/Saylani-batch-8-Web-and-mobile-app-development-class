@@ -6,37 +6,42 @@ import mongoose from 'mongoose';
 const router = express.Router()
 
 router.post('/tweet', (req, res) => {
+    try {
 
-    const body = req.body;
+        const body = req.body;
 
-    if ( // validation
-        !body.text
-    ) {
-        res.status(400).send({
-            message: "required parameters missing",
-        });
-        return;
+        if ( // validation
+            !body.text
+        ) {
+            res.status(400).send({
+                message: "required parameters missing",
+            });
+            return;
+        }
+
+        console.log(body.text)
+
+        tweetModel.create({
+            text: body.text,
+            owner: new mongoose.Types.ObjectId(body.token._id)
+        },
+            (err, saved) => {
+                if (!err) {
+                    console.log("saved: ", saved);
+
+                    res.send({
+                        message: "tweet added successfully"
+                    });
+                } else {
+                    console.log("err: ", err);
+                    res.status(500).send({
+                        message: "server error"
+                    })
+                }
+            })
+    } catch (error) {
+        console.log("error: ", error);
     }
-
-    console.log(body.text)
-
-    tweetModel.create({
-        text: body.text,
-        owner: new mongoose.Types.ObjectId(body.token._id)
-    },
-        (err, saved) => {
-            if (!err) {
-                console.log(saved);
-
-                res.send({
-                    message: "tweet added successfully"
-                });
-            } else {
-                res.status(500).send({
-                    message: "server error"
-                })
-            }
-        })
 })
 
 router.get('/tweets', (req, res) => {
@@ -63,6 +68,7 @@ router.get('/tweets', (req, res) => {
                     data: data
                 })
             } else {
+                console.log("err: ", err);
                 res.status(500).send({
                     message: "server error"
                 })
@@ -120,6 +126,7 @@ router.get('/tweet/:id', (req, res) => {
 
 router.delete('/tweet/:id', (req, res) => {
     const id = req.params.id;
+    const body = req.body;
 
     tweetModel.deleteOne({
         _id: id,
