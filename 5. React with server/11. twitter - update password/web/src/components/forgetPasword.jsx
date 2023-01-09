@@ -36,6 +36,29 @@ function ForgetPassword() {
 
         } catch (e) {
             console.log("e: ", e);
+            setResult(e.response?.data?.message)
+        }
+
+        // e.reset();
+    }
+    const updatePassword = async (e) => {
+        e.preventDefault();
+
+        try {
+            let response = await axios.post(`${state.baseUrl}/forget-password-2`, {
+                email: email,
+                otp: otp,
+                newPassword: newPassword
+            }, {
+                withCredentials: true
+            })
+
+            console.log(response.data?.message);
+            setResult(response.data?.message)
+
+        } catch (e) {
+            console.log("e: ", e);
+            setResult(e.response?.data?.message)
         }
 
         // e.reset();
@@ -46,23 +69,28 @@ function ForgetPassword() {
         <>
             <h4>This is ForgetPassword page</h4>
 
-            <form onSubmit={sendOtp} className="loginForm">
 
+            {(!isOtpSent) ?
 
-                <TextField
-                    className="TextField"
-                    id="email"
-                    label="Email"
-                    variant="outlined"
-                    type="email"
-                    name="username"
-                    placeholder="email"
-                    autoComplete="username"
-                    onChange={(e) => { setEmail(e.target.value) }}
-                />
+                <form onSubmit={sendOtp} className="loginForm">
+                    <TextField
+                        className="TextField"
+                        id="email"
+                        label="Email"
+                        variant="outlined"
+                        type="email"
+                        name="username"
+                        placeholder="email"
+                        autoComplete="username"
+                        onChange={(e) => { setEmail(e.target.value) }}
+                    />
+                    <br />
+                    <Button variant="outlined" type="submit">Send OTP email</Button>
+                </form>
+                :
 
-                {(isOtpSent) ? <>
-
+                <form onSubmit={updatePassword} className="loginForm">
+                    <h2>{email}</h2>
                     < br />
                     <TextField
                         className="TextField"
@@ -88,13 +116,14 @@ function ForgetPassword() {
                         autoComplete="new-password"
                         onChange={(e) => { setNewPassword(e.target.value) }}
                     />
-                </>
-                    : null}
+                    <br />
+                    <Button variant="outlined" type="submit">Update Password</Button>
 
-                <br />
-                <Button variant="outlined" type="submit">Send OTP email</Button>
+                </form>
+            }
 
-            </form>
+
+
 
             <p>{result}</p>
         </>

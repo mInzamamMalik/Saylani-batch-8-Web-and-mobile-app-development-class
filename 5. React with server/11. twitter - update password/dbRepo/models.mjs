@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 let tweetSchema = new mongoose.Schema({
     text: { type: String, required: true },
     owner: { type: mongoose.ObjectId, ref: "Users", required: true },
-    
+
     // ownerName: String,
     // profilePhoto: String,
 
@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema({
     lastName: { type: String },
     email: { type: String, required: true },
     password: { type: String, required: true },
+    isActive: { type: Boolean, default: true},
     // following: [{ type: mongoose.ObjectId }, ref: "Users"],
     // followers: [{ type: mongoose.ObjectId }, ref: "Users"],
 
@@ -36,6 +37,7 @@ export const userModel = mongoose.model('Users', userSchema);
 const otpSchema = new mongoose.Schema({
     otp: String,
     email: String,
+    isUsed: { type: Boolean, default: false },
     createdOn: { type: Date, default: Date.now },
 });
 export const otpModel = mongoose.model('Opts', otpSchema);

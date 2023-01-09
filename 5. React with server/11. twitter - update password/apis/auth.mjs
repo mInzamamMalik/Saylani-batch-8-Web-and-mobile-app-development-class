@@ -6,7 +6,7 @@ import {
 } from "bcrypt-inzi"
 import jwt from 'jsonwebtoken';
 import { nanoid, customAlphabet } from 'nanoid'
-
+import moment from 'moment';
 
 const SECRET = process.env.SECRET || "topsecret";
 
@@ -192,14 +192,17 @@ router.post('/forget-password', async (req, res) => {
 
         const nanoid = customAlphabet('1234567890', 5)
         const OTP = nanoid();
+        const otpHash = await stringToHash(OTP)
 
-        console.log("OTP: ", OTP)
+        console.log("OTP: ", OTP);
+        console.log("otpHash: ", otpHash);
+
         otpModel.create({
-            otp: OTP,
-            email: body.email,
+            otp: otpHash,
+            email: body.email, // malik@sysborg.com
         });
 
-        // TODO: send otp via email // postMark
+        // TODO: send otp via email // postMark sendGrid twilio
 
         res.send({
             message: "OTP sent success",
@@ -222,7 +225,12 @@ router.post('/forget-password-2', async (req, res) => {
         let body = req.body;
         body.email = body.email.toLowerCase();
 
-        if (!body.email || !body.otp || !body.newPassword) { // null check - undefined, "", 0 , false, null , NaN
+        if (
+            !body.email
+            || !body.otp
+            || !body.newPassword
+        ) { // null check - undefined, "", 0 , false, null , NaN
+
             res.status(400).send(
                 `required fields missing, request example: 
                 {
@@ -236,19 +244,42 @@ router.post('/forget-password-2', async (req, res) => {
 
         // check if otp exist
         const otpRecord = await otpModel.findOne(
-            { email: body.email }
+            {
+                email: body.email,
+            }
         )
             .sort({ _id: -1 })
             .exec()
 
-        if (!otpRecord) throw new Error("Otp not found")
+
+        if (!otpRecord) throw new Error("Invalid Opt")
+        if (otpRecord.isUsed) throw new Error("Invalid Otp")
+
+        await otpRecord.update({ isUsed: true }).exec();
+
+        console.log("otpRecord: ", otpRecord);
+        console.log("otpRecord: ", moment(otpRecord.createdOn));
+
+        const now = moment();
+        const optCreatedTime = moment(otpRecord.createdOn);
+        const diffInMinutes = now.diff(optCreatedTime, "minutes")
+
+        console.log("diffInMinutes: ", diffInMinutes);
+        if (diffInMinutes >= 5) throw new Error("Invalid Otp")
+
+
 
         const isMatched = await varifyHash(body.otp, otpRecord.otp)
         if (!isMatched) throw new Error("Invalid OTP")
 
         const newHash = await stringToHash(body.newPassword);
 
-        await userModel.updateOne({ email: body.email }, { password: newHash }).exec()
+        await userModel.updateOne(
+            { email: body.email },
+            { password: newHash }
+        ).exec()
+
+
 
         // success
         res.send({
