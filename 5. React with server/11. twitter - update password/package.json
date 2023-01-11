@@ -18,6 +18,8 @@
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
     "mongoose": "^6.8.0",
-    "nanoid": "^4.0.0"
+    "nanoid": "^4.0.0",
+    "postmark": "^3.0.15",
+    "twilio": "^3.84.1"
   }
 }

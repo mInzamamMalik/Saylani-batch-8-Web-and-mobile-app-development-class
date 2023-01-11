@@ -5,11 +5,19 @@ import {
     varifyHash,
 } from "bcrypt-inzi"
 import jwt from 'jsonwebtoken';
-import { nanoid, customAlphabet } from 'nanoid'
+import { customAlphabet } from 'nanoid'
 import moment from 'moment';
+import postmark from "postmark";
+import twilio from 'twilio'
+
 
 const SECRET = process.env.SECRET || "topsecret";
+const POSTMARK_TOKEN = process.env.POSTMARK_TOKEN || "63162a07-c73b-4874-a6ce-6d9ebfe96cac"
+const accountSid = process.env.TWILIO_SID || 'ACde4f32b2e2481d1ff811673558d239ba';
+const authToken = process.env.TWILIO_AUTH || '1b0a00de48d5273dd99ba267e7c7852a';
 
+let postMarkClient = new postmark.ServerClient(POSTMARK_TOKEN);
+let twilioClient = twilio(accountSid, authToken);
 
 const router = express.Router()
 
@@ -202,7 +210,27 @@ router.post('/forget-password', async (req, res) => {
             email: body.email, // malik@sysborg.com
         });
 
+
         // TODO: send otp via email // postMark sendGrid twilio
+        const emailResp = await postMarkClient.sendEmail({
+            "From": "info@sysborg.com",
+            "To": user.email,
+            "Subject": "SysBorg: One Time Password",
+            "HtmlBody": `
+            <div>
+                <p>Hi ${user.firstName} ${user.lastName}, you requested for forget password, here is your otp, it is only valid for 5 minutes: </p>
+                <h1>${OTP}</h1>
+            </div>`,
+            "MessageStream": "outbound"
+        });
+        console.log("emailResp: ", emailResp);
+
+        // const twilioResp = await twilioClient.messages.create({
+        //     body: `Hi ${user.firstName} ${user.lastName}, you requested for forget password, here is your otp, it is only valid for 5 minutes: ${OTP}`,
+        //     messagingServiceSid: 'MG5d595874c297d11b3349828df8d134be',
+        //     to: '+923022004480'
+        // })
+        // console.log("twilioResp: ", twilioResp);
 
         res.send({
             message: "OTP sent success",
