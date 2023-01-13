@@ -78,13 +78,20 @@ router.get('/tweets', (req, res) => {
 
 router.get('/tweetFeed', (req, res) => {
 
+    const page = req.query.page || 0
+
     tweetModel.find(
         { isDeleted: false },
         {},
         {
             sort: { "_id": -1 },
-            limit: 100,
-            skip: 0
+            limit: 5, // 5
+            skip: page, // 5 // 10 // 15
+            populate:
+            {
+                path: "owner",
+                select: 'firstName lastName email'
+            }
         }
         , (err, data) => {
             if (!err) {

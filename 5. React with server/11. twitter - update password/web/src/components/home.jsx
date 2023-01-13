@@ -3,6 +3,8 @@ import * as yup from 'yup';
 import axios from "axios";
 import { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from './../context/Context';
+import moment from 'moment';
+import InfiniteScroll from 'react-infinite-scroller';
 
 function Home() {
 
@@ -14,13 +16,26 @@ function Home() {
     const [isEditMode, setIsEditMode] = useState(false)
     const [editingTweet, setEditingTweet] = useState(null)
 
+    const [eof, setEof] = useState(false)
+
 
     const getAllTweets = async () => {
+        if (eof) return;
         try {
-            const response = await axios.get(`${state.baseUrl}/tweetFeed`)
+            const response = await axios.get(`${state.baseUrl}/tweetFeed?page=${tweets.length}`)
             console.log("response: ", response.data);
 
-            setTweets(response.data.data)
+            if (response.data.data.length === 0) setEof(true);
+
+
+
+            setTweets((prev) => {
+
+                // if (prev.length >= 10) {
+                //     prev = prev.slice(5)
+                // }
+                return [...prev, ...response.data.data]
+            })
 
         } catch (error) {
             console.log("error in getting all tweets", error);
@@ -71,7 +86,7 @@ function Home() {
         onSubmit: (values) => {
             console.log("values: ", values);
 
-            axios.post(`${state.baseUrl}/product`, {
+            axios.post(`${state.baseUrl}/tweet`, {
                 text: values.tweetText,
             })
                 .then(response => {
@@ -134,23 +149,31 @@ function Home() {
             <br />
 
 
-            <div >
-                {tweets.map((eachProduct, i) => (
-                    <div key={eachProduct._id} style={{ border: "1px solid black", padding: 10, margin: 10, borderRadius: 15 }}>
-                        <h2>{eachProduct.name}</h2>
-                        <p>{eachProduct._id}</p>
-                        <h5>{eachProduct.price}</h5>
-                        <p>{eachProduct.description}</p>
+
+            <InfiniteScroll
+                pageStart={0}
+                loadMore={getAllTweets}
+                hasMore={!eof}
+                loader={<div className="loader" key={0}>Loading ...</div>}
+            >
+
+
+                {tweets.map((eachTweet, i) => (
+                    <div key={i} style={{ border: "1px solid black", padding: 10, margin: 10, borderRadius: 15 }}>
+
+                        <h2>{eachTweet?.owner?.firstName} {eachTweet?.owner?.lastName}</h2>
+                        <div>{moment(eachTweet.createdOn).fromNow()}</div>
+                        <p>{eachTweet?.text}</p>
 
                         <button onClick={() => {
-                            deleteTweet(eachProduct._id)
+                            deleteTweet(eachTweet._id)
                         }}>delete</button>
 
                         <button onClick={() => {
-                            editMode(eachProduct)
+                            editMode(eachTweet)
                         }}>edit</button>
 
-                        {(isEditMode && editingTweet._id === eachProduct._id) ?
+                        {(isEditMode && editingTweet._id === eachTweet._id) ?
                             <div>
 
                                 <form onSubmit={editFormik.handleSubmit}>
@@ -203,7 +226,10 @@ function Home() {
 
                     </div>
                 ))}
-            </div>
+                
+
+            </InfiniteScroll>
+
 
 
         </div>
