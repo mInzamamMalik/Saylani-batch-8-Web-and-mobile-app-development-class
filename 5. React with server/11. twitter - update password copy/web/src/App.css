@@ -1,0 +1,23 @@
+.navBar {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.navBar>ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+}
+
+.navBar>ul>li {
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.navBar>ul>li>a {
+  text-decoration: none;
+  padding: 10px 20px;
+  display: inline-block;
+}
