@@ -16,6 +16,8 @@ function Home() {
     const [isEditMode, setIsEditMode] = useState(false)
     const [editingTweet, setEditingTweet] = useState(null)
 
+    const [preview, setPreview] = useState(null)
+
     const [eof, setEof] = useState(false)
 
 
@@ -80,18 +82,29 @@ function Home() {
 
     const myFormik = useFormik({
         initialValues: {
-            tweetText: '',
+            tweetText: ''
         },
         validationSchema: tweetValidationSchema,
         onSubmit: (values) => {
             console.log("values: ", values);
 
-            axios.post(`${state.baseUrl}/tweet`, {
-                text: values.tweetText,
+            let fileInput = document.getElementById("picture");
+            console.log("fileInput: ", fileInput.files[0]);
+
+            let formData = new FormData();
+
+            formData.append("myFile", fileInput.files[0]);
+            formData.append("text", values.tweetText);
+
+            axios({
+                method: 'post',
+                url: `${state.baseUrl}/tweet`,
+                data: formData,
+                headers: { 'Content-Type': 'multipart/form-data' }
             })
-                .then(response => {
-                    console.log("response: ", response.data);
+                .then(res => {
                     setLoadTweet(!loadTweet)
+                    console.log(`upload Success` + res.data);
                 })
                 .catch(err => {
                     console.log("error: ", err);
@@ -142,6 +155,29 @@ function Home() {
                 }
 
                 <br />
+
+                <label htmlFor="picture">picture for your tweet</label>
+                <br />
+                <input
+                    id='picture'
+                    type="file"
+                    accept='image/*'
+                    onChange={(e) => {
+
+                        var url = URL.createObjectURL(e.currentTarget.files[0])
+
+                        console.log("url: ", url);
+
+                        setPreview(url)
+
+                    }}
+                />
+                <br />
+                <img width={200} src={preview} alt="" />
+
+                <br />
+                <br />
+
                 <button type="submit"> Submit </button>
             </form>
 
@@ -226,7 +262,7 @@ function Home() {
 
                     </div>
                 ))}
-                
+
 
             </InfiniteScroll>
 
