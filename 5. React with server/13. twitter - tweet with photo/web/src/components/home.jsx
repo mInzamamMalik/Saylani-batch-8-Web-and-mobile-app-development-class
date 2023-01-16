@@ -203,6 +203,10 @@ function Home() {
                         <div>{moment(eachTweet.createdOn).fromNow()}</div>
                         <p>{eachTweet?.text}</p>
 
+                        <img src={eachTweet.imageUrl} alt="tweet image" />
+
+                        <br />
+
                         <button onClick={() => {
                             deleteTweet(eachTweet._id)
                         }}>delete</button>
