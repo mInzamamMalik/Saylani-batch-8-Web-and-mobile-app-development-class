@@ -1,0 +1,22 @@
+.banner>.cover {
+    width: 100%;
+}
+
+.profile {
+    position: relative;
+    top: -120px;
+    display: flex;
+    align-items: flex-end;
+}
+.profile>img {
+    border-radius: 50%;
+    width: 200px;
+    margin: 20px;
+    border: 1px solid white;
+}
+.profile>span {
+    font-size: 32px;
+    font-weight: bold;
+    padding-bottom: 35px;
+}
+
