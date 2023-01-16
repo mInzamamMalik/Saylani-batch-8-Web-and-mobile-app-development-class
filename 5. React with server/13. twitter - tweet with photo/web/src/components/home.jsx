@@ -96,6 +96,8 @@ function Home() {
             formData.append("myFile", fileInput.files[0]);
             formData.append("text", values.tweetText);
 
+            console.log(formData.get("text"));
+
             axios({
                 method: 'post',
                 url: `${state.baseUrl}/tweet`,

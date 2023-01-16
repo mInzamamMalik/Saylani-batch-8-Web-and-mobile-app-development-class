@@ -7,7 +7,7 @@ let tweetSchema = new mongoose.Schema({
     // ownerName: String,
     // profilePhoto: String,
 
-    image: { type: String },
+    imageUrl: { type: String },
     // likes: [{ type: mongoose.ObjectId }],
     // comments: [{
     //     user: { type: mongoose.ObjectId },
