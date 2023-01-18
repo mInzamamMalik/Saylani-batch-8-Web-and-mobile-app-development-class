@@ -5,60 +5,60 @@ import { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from './../context/Context';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
 
 import "./userList.css"
 
-function Home() {
+function ChatScreen() {
 
     let { state, dispatch } = useContext(GlobalContext);
+    const { id } = useParams();
 
-    const [searchTerm, setSearchTerm] = useState("");
+
+    const [writeMessage, setWriteMessage] = useState("");
     const [users, setUsers] = useState(null);
 
     useEffect(() => {
 
-        getUsers();
 
     }, [])
 
-    const getUsers = async (e) => {
+    const sendMessage = async (e) => {
         if (e) e.preventDefault();
 
         try {
-            const response = await axios.get(`${state.baseUrl}/users?q=${searchTerm}`)
+            const response = await axios.post(`${state.baseUrl}/message`, {
+                to: id,
+                text: writeMessage,
+            })
             console.log("response: ", response.data);
             setUsers(response.data)
 
         } catch (error) {
             console.log("error in getting all tweets", error);
-            // setUsers([])
         }
     }
 
 
     return (
         <div>
-            <h1>Search user to start chat</h1>
+            <h1>Chat Screen</h1>
 
-            <form onSubmit={getUsers}>
-                <input type="search" placeholder='type user name' onChange={(e) => [
-                    setSearchTerm(e.target.value)
+            <form onSubmit={sendMessage}>
+                <input type="text" placeholder='type your message' onChange={(e) => [
+                    setWriteMessage(e.target.value)
                 ]} />
-                <button type="submit">Search</button>
+                <button type="submit">Send</button>
             </form>
 
             {(users?.length) ?
                 users?.map((eachUser, index) => {
                     return <div className='userListItem' key={index}>
-                        <Link to={`/chat/${eachUser._id}`}>
+                        <h2>{eachUser.firstName} {eachUser.lastName}</h2>
+                        <span>{eachUser.email}</span>
 
-
-                            <h2>{eachUser.firstName} {eachUser.lastName}</h2>
-                            <span>{eachUser.email}</span>
-
-                            {(eachUser?.me) ? <span><br />this is me</span> : null}
-                        </Link>
+                        {(eachUser?.me) ? <span><br />this is me</span> : null}
                     </div>
                 })
                 : null
@@ -70,4 +70,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default ChatScreen;
