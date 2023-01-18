@@ -149,6 +149,52 @@ app.post('/api/v1/change-password', async (req, res) => {
 })
 
 
+app.get('/api/v1/users', async (req, res) => {
+
+    const myId = req.body.token._id
+
+    try {
+        const q = req.query.q;
+        console.log("q: ", q);
+
+        let query;
+
+        if (q) {
+            query = userModel.find({ $text: { $search: q } })
+        } else {
+            query = userModel.find({}).limit(20)
+        }
+
+        const users = await query.exec();
+
+        const modifiedUserList = users.map(eachUser => {
+
+            let user = {
+                _id: eachUser._id,
+                firstName: eachUser.firstName,
+                lastName: eachUser.lastName,
+                email: eachUser.email
+            }
+
+            if (eachUser._id.toString() === myId) {
+
+                console.log("matched");
+                user.me = true
+                return user;
+            } else {
+                return user;
+            }
+        })
+
+        res.send(modifiedUserList);
+
+    } catch (e) {
+        console.log("Error: ", e);
+        res.send([]);
+    }
+})
+
+
 
 
 const __dirname = path.resolve();

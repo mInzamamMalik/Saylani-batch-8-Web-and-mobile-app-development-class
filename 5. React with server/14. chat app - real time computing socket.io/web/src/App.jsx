@@ -5,10 +5,8 @@ import axios from 'axios'
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import loaderImg from './img/loader.webp'
 
-import Home from "./components/home";
+import UserList from "./components/userList";
 import Profile from "./components/profile";
-import About from "./components/about";
-import Gallery from "./components/gallery";
 import Login from "./components/login";
 import Signup from "./components/signup";
 import ChangePassword from "./components/changePassword";
@@ -135,7 +133,7 @@ function App() {
       {(state.isLogin === true) ?
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<UserList />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="*" element={<Navigate to="/" replace={true} />} />
