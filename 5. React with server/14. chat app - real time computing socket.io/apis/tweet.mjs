@@ -7,7 +7,6 @@ import bucket from "./../firebaseAdmin/index.mjs";
 import fs from 'fs';
 
 const storageConfig = multer.diskStorage({
-    destination: './uploads/',
     filename: function (req, file, cb) {
 
         console.log("mul-file: ", file);

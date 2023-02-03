@@ -61,6 +61,7 @@ export const otpModel = mongoose.model('Opts', otpSchema);
 
 const mongodbURI = process.env.mongodbURI || "mongodb+srv://dbuser:dbpassword@cluster0.gq9n2zr.mongodb.net/abcdatabase?retryWrites=true&w=majority";
 /////////////////////////////////////////////////////////////////////////////////////////////////
+mongoose.set('strictQuery', false);
 mongoose.connect(mongodbURI);
 
 ////////////////mongodb connected disconnected events///////////////////////////////////////////////
