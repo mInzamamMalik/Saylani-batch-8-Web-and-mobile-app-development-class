@@ -1,0 +1,6 @@
+[{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target" : { "namespace": "android_app", "package_name": "sh.surge.acoustic_rest.twa",
+                     "sha256_cert_fingerprints": ["5B:5B:27:5B:DA:83:02:9A:C9:FC:04:7B:FE:4F:22:6D:90:E4:2E:3F:68:7C:23:5F:65:5D:AE:EE:49:31:B6:FF"] }
+      }
+]

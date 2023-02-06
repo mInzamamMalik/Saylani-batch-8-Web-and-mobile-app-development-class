@@ -1,0 +1,35 @@
+.messageView {
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    /* border: 1px solid black; */
+    padding: 10px;
+
+    max-width: 30rem;
+    min-width: 13rem;
+    margin: 5px;
+}
+
+.recipientMessage {
+    border-radius: 15px 15px 15px 0px;
+    background-color: #E5E5EA;
+}
+
+
+.myMessage {
+    align-self: flex-end;
+    border-radius: 15px 15px 0px 15px;
+    background-color: #007AFE;
+    color: white;
+}
+
+.message .head {
+    display: flex;
+    gap: 10px
+}
+
+.message .name {
+    font-weight: bold;
+}

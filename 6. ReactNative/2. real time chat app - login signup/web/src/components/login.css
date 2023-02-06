@@ -1,0 +1,9 @@
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px;
+}
+.loginForm > .TextField{
+    width: 500px;
+}

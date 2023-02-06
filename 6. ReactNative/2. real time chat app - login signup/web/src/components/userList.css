@@ -1,0 +1,24 @@
+.userListItem {
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.notificationView {
+    position: fixed;
+    top: 0;
+    right: 0;
+    text-align: right;
+}
+
+.notificationView .item {
+    background-color: #DDDDDD;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.notificationView .title {
+    font-weight: bold;
+}
