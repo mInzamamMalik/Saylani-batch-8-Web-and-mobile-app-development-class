@@ -13,6 +13,7 @@ import {
     TextInput,
     TouchableOpacity,
     Alert,
+    ActivityIndicator
 } from 'react-native';
 
 import {
@@ -29,16 +30,24 @@ import axios from 'axios';
 const baseUrl = 'https://ec9d-175-107-203-27.ngrok.io';
 
 const Login = () => {
-    const [userName, setUserName] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
+    const lastNameInputRef: any = useRef("");
+    const emailInputRef: any = useRef("");
     const passwordInputRef: any = useRef("");
 
     const handleSubmit = async () => {
 
         try {
-            const resp = await axios.post(`${baseUrl}/api/v1/login`, {
-                email: userName,
+            setIsLoading(true)
+            const resp = await axios.post(`${baseUrl}/api/v1/signup`, {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
                 password: password
             },
                 {
@@ -46,14 +55,16 @@ const Login = () => {
                 })
             console.log("response: ", resp);
             Alert.alert(resp.data.message)
-
+            setIsLoading(false)
+            
         } catch (e: any) {
             Alert.alert(`${e.response.data.message || "failed"}`);
+            setIsLoading(false)
         }
 
     };
 
-    return <View style={styles.container}>
+    return <ScrollView contentContainerStyle={styles.container} >
         {/* <View> */}
         {/* </View> */}
         {/* <ScrollView contentInsetAdjustmentBehavior="automatic"> */}
@@ -63,9 +74,29 @@ const Login = () => {
         <View style={styles.inputContainer}>
             {/* <Text style={styles.labels}>Enter you email</Text> */}
             <TextInput
-                value={userName}
-                onChangeText={(text) => setUserName(text)}
+                onChangeText={(text) => setFirstName(text)}
                 autoFocus
+                placeholder={"First Name"}
+                style={styles.textInput}
+                autoCorrect={false}
+                placeholderTextColor={"#a8a5a5"}
+                returnKeyType='next'
+                onSubmitEditing={() => { lastNameInputRef.current.focus() }}
+            />
+            <TextInput
+                ref={lastNameInputRef}
+                onChangeText={(text) => setLastName(text)}
+                placeholder={"Last Name"}
+                style={styles.textInput}
+                autoCorrect={false}
+                placeholderTextColor={"#a8a5a5"}
+                returnKeyType='next'
+                onSubmitEditing={() => { emailInputRef.current.focus() }}
+            />
+            <TextInput
+                ref={emailInputRef}
+                value={email}
+                onChangeText={(text) => setEmail(text)}
                 placeholder={"Email"}
                 keyboardType="email-address"
                 style={styles.textInput}
@@ -112,12 +143,22 @@ const Login = () => {
                     Forget Password?
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => handleSubmit()}
-            >
-                <Text style={styles.buttonText}>LOGIN</Text>
-            </TouchableOpacity>
+
+
+            {(isLoading) ?
+                (<ActivityIndicator size='large' />) :
+
+                (<TouchableOpacity
+                    style={styles.button}
+                    onPress={() => handleSubmit()}
+                >
+                    <Text style={styles.buttonText}>
+                        SIGNUP
+                    </Text>
+                </TouchableOpacity>)
+            }
+
+
         </View>
         <TouchableOpacity>
             <Text style={styles.footerText}>
@@ -125,7 +166,7 @@ const Login = () => {
             </Text>
         </TouchableOpacity>
         {/* </ScrollView> */}
-    </View>
+    </ScrollView>
 
 }
 

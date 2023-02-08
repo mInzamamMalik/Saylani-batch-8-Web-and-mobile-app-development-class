@@ -26,6 +26,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import Login from './components/Login';
+import Signup from './components/Signup';
 
 
 type SectionProps = PropsWithChildren<{
@@ -121,7 +122,8 @@ function App() {
       />
 
 
-      <Login />
+      {/* <Login /> */}
+      <Signup />
 
     </SafeAreaView>
   );
