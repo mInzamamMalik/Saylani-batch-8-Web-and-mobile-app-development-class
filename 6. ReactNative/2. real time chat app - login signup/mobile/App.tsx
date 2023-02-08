@@ -25,9 +25,12 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import { NativeRouter, Routes, Route } from "react-router-native";
+
+
 import Login from './components/Login';
 import Signup from './components/Signup';
-
+import ContextProvider from './context/Context'
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -115,17 +118,25 @@ function App() {
 
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
+    <ContextProvider>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
 
+        <NativeRouter>
 
-      {/* <Login /> */}
-      <Signup />
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
 
-    </SafeAreaView>
+        </NativeRouter>
+
+      </SafeAreaView>
+    </ContextProvider>
+
   );
 }
 

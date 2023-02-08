@@ -1,6 +1,6 @@
 
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
     ScrollView,
     StyleSheet,
@@ -13,6 +13,7 @@ import {
     TextInput,
     TouchableOpacity,
     Alert,
+    ActivityIndicator
 } from 'react-native';
 
 import {
@@ -24,20 +25,27 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import axios from 'axios';
+import { Link } from "react-router-native";
+import { GlobalContext } from './../context/Context';
 
 
-const baseUrl = 'https://ec9d-175-107-203-27.ngrok.io';
 
 const Login = () => {
+
+    let { state, dispatch } = useContext(GlobalContext);
+
+
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const passwordInputRef: any = useRef("");
 
     const handleSubmit = async () => {
 
         try {
-            const resp = await axios.post(`${baseUrl}/api/v1/login`, {
+            setIsLoading(true)
+            const resp = await axios.post(`${state?.baseUrl}/api/v1/login`, {
                 email: userName,
                 password: password
             },
@@ -46,11 +54,13 @@ const Login = () => {
                 })
             console.log("response: ", resp);
             Alert.alert(resp.data.message)
+            setIsLoading(false)
 
         } catch (e: any) {
             Alert.alert(`${e.response.data.message || "failed"}`);
-        }
+            setIsLoading(false)
 
+        }
     };
 
     return <View style={styles.container}>
@@ -112,17 +122,30 @@ const Login = () => {
                     Forget Password?
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => handleSubmit()}
-            >
-                <Text style={styles.buttonText}>LOGIN</Text>
-            </TouchableOpacity>
+
+            {(isLoading) ?
+                (<ActivityIndicator size='large' />) :
+
+                (<TouchableOpacity
+                    style={styles.button}
+                    onPress={() => handleSubmit()}
+                >
+                    <Text style={styles.buttonText}>LOGIN</Text>
+                </TouchableOpacity>)
+            }
+
+
+
+
+
+
         </View>
         <TouchableOpacity>
-            <Text style={styles.footerText}>
-                Don't have an account yet? Signup
-            </Text>
+            <Link to={'/signup'}>
+                <Text style={styles.footerText}>
+                    Don't have an account yet? Signup
+                </Text>
+            </Link>
         </TouchableOpacity>
         {/* </ScrollView> */}
     </View>
@@ -189,7 +212,7 @@ export const styles = StyleSheet.create({
         fontFamily: 'serif',
         marginTop: 20,
         textAlign: "center",
-        color: "black",
+        color: "gray",
         fontWeight: '300',
     },
     labels2: {},

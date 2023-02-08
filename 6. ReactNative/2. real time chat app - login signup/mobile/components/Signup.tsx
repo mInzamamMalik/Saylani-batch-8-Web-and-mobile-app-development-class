@@ -1,6 +1,6 @@
 
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
     ScrollView,
     StyleSheet,
@@ -25,11 +25,15 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import axios from 'axios';
+import { Link } from 'react-router-native'
+import { GlobalContext } from './../context/Context';
 
-
-const baseUrl = 'https://ec9d-175-107-203-27.ngrok.io';
 
 const Login = () => {
+
+    let { state, dispatch } = useContext(GlobalContext);
+
+
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -44,7 +48,7 @@ const Login = () => {
 
         try {
             setIsLoading(true)
-            const resp = await axios.post(`${baseUrl}/api/v1/signup`, {
+            const resp = await axios.post(`${state?.baseUrl}/api/v1/signup`, {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
@@ -56,7 +60,7 @@ const Login = () => {
             console.log("response: ", resp);
             Alert.alert(resp.data.message)
             setIsLoading(false)
-            
+
         } catch (e: any) {
             Alert.alert(`${e.response.data.message || "failed"}`);
             setIsLoading(false)
@@ -160,13 +164,16 @@ const Login = () => {
 
 
         </View>
-        <TouchableOpacity>
+
+
+        <Link to={'/'}>
             <Text style={styles.footerText}>
-                Don't have an account yet? Signup
+                Already have an account? Login
             </Text>
-        </TouchableOpacity>
+        </Link>
+
         {/* </ScrollView> */}
-    </ScrollView>
+    </ScrollView >
 
 }
 
