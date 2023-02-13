@@ -30,6 +30,7 @@ import { NativeRouter, Routes, Route } from "react-router-native";
 
 import Login from './components/Login';
 import Signup from './components/Signup';
+import UserList from './components/userList';
 import ContextProvider from './context/Context'
 
 type SectionProps = PropsWithChildren<{
@@ -129,7 +130,8 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            {/* <Route path="/signup" element={<Signup />} /> */}
+            <Route path="/signup" element={<UserList />} />
           </Routes>
 
         </NativeRouter>

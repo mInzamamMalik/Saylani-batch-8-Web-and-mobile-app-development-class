@@ -26,6 +26,8 @@ import {
 
 import axios from 'axios';
 import { Link } from "react-router-native";
+import { NavLink } from "react-router-dom";
+
 import { GlobalContext } from './../context/Context';
 
 
@@ -141,7 +143,7 @@ const Login = () => {
 
         </View>
         <TouchableOpacity>
-            <Link to={'/signup'}>
+            <Link to={'/signup'} underlayColor={'transparent'}>
                 <Text style={styles.footerText}>
                     Don't have an account yet? Signup
                 </Text>
@@ -152,6 +154,9 @@ const Login = () => {
 
 }
 
+let activeStyle = {
+    textDecoration: "underline",
+};
 export default Login;
 
 
